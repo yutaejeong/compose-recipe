@@ -23,6 +23,9 @@ export default function Home() {
   const [testingCategories, setTestingCategories] = useState<Record<string, boolean>>(CATEGORIES.reduce((acc, category) => Object.assign(acc, { [category]: true }), {}));
   const inputRef = useRef<HTMLInputElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const timerLabelRef = useRef<HTMLSpanElement>(null);
+  const elapsedTime = useRef<number>(0);
+  const timerRef = useRef<ReturnType<typeof setInterval>>(null);
 
   useEffect(() => {
     handleNextQuiz();
@@ -36,12 +39,28 @@ export default function Home() {
     }
   }, [showRecipe]);
 
+  function restartTimer() {
+    elapsedTime.current = 0;
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    timerRef.current = setInterval(() => {
+      if (timerLabelRef.current) {
+        timerLabelRef.current.innerText = elapsedTime.current.toFixed(2);
+      }
+      elapsedTime.current += 0.01;
+    }, 10);
+  }
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
   }
 
   function handleShowRecipe() {
     setShowRecipe(true);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
   }
 
   function handleNextQuiz() {
@@ -56,6 +75,7 @@ export default function Home() {
       setQuiz(candidates[getRandomInt(0, candidates.length - 1)]);
     }
     setShowRecipe(false);
+    restartTimer();
   }
 
   function handleTestingCategoryChanged(category: string, changedTo: boolean) {
@@ -67,21 +87,26 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-items-center min-h-dvh p-8 pb-20 gap-6 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="w-full items-center flex flex-col gap-2">
+      <main className="w-full items-center flex flex-col gap-8">
         <Link href="/practice">
           <Button variant="contained">연습 페이지로</Button>
         </Link>
-        <FormGroup sx={{ display: "flex", gap: 1, flexDirection: "row" }}>
-          {CATEGORIES.map((category) => (
-            <FormControlLabel key={category} control={<Checkbox checked={testingCategories[category]} onChange={(e) => handleTestingCategoryChanged(category, e.target.checked)} />} label={category} />
-          ))}
+        <FormGroup>
+          <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 py-2 px-4 border rounded bg-gray-50">
+            {CATEGORIES.map((category) => (
+              <FormControlLabel key={category} control={<Checkbox checked={testingCategories[category]} onChange={(e) => handleTestingCategoryChanged(category, e.target.checked)} />} label={category} />
+            ))}
+          </div>
         </FormGroup>
         <Card sx={{ width: "100%" }}>
           <form className="w-full" onSubmitCapture={(e) => handleSubmit(e)}>
             <CardContent>
-              <Typography variant="h5" component="div" sx={{ mb: 1.5 }}>
-                {quiz.name}
-              </Typography>
+              <div className="mb-3">
+                <Typography variant="h5" component="span">
+                  {quiz.name}
+                </Typography>
+                <Typography variant="h6" component="span" sx={{ ml: 1 }} ref={timerLabelRef} />
+              </div>
               <TextField
                 multiline
                 autoComplete="off"
@@ -93,9 +118,11 @@ export default function Home() {
                 onFocus={(e) => (e.target.value = "")}
               />
               {showRecipe && (
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  {quiz.recipe}
-                </Typography>
+                <div className="mt-2 py-2 px-3.5 border rounded bg-gray-50">
+                  <Typography variant="body1" sx={{ fontWeight: "600", color: "#444" }}>
+                    {quiz.recipe}
+                  </Typography>
+                </div>
               )}
             </CardContent>
             <CardActions>

@@ -81,7 +81,13 @@ export default function PracticePage() {
                 {showTesting && <TextField disabled={showRecipe} multiline label="레시피" variant="outlined" fullWidth sx={{ mt: 1 }} />}
               </div>
             </AccordionSummary>
-            <AccordionDetails>{recipe.recipe}</AccordionDetails>
+            <AccordionDetails>
+              <div className="py-2 px-3.5 border rounded bg-gray-50">
+                <Typography variant="body1" sx={{ fontWeight: "600", color: "#444" }}>
+                  {recipe.recipe}
+                </Typography>
+              </div>
+            </AccordionDetails>
           </Accordion>
         ))}
       </div>

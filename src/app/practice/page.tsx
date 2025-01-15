@@ -75,7 +75,7 @@ export default function PracticePage() {
       <div className="w-full">
         {recipes.map((recipe) => (
           <Accordion expanded={showRecipe} key={recipe.name}>
-            <AccordionSummary aria-controls={`${name}-레시피`} tabIndex={-1}>
+            <AccordionSummary aria-controls={`${recipe.name}-레시피`} tabIndex={-1}>
               <div className="flex flex-col gap-1 flex-1">
                 <Typography>{recipe.name}</Typography>
                 {showTesting && <TextField disabled={showRecipe} multiline label="레시피" variant="outlined" fullWidth sx={{ mt: 1 }} />}

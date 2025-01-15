@@ -3,12 +3,16 @@
 import { CATEGORIES, Category, Recipe, RECIPES } from "@/constants/recipe";
 import { Edit, EditOff, Shuffle, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import Unit from "./unit";
 
 function shuffleArray<T>(array: T[]): T[] {
   const result = [...array];
@@ -29,6 +33,8 @@ export default function PracticePage() {
     const newSelectedCategory = e.target.value as Category;
     setSelectedCategory(newSelectedCategory);
     setRecipes(() => RECIPES.filter((recipe) => recipe.category === newSelectedCategory));
+    setShowTesting(false);
+    setShowRecipe(false);
   }
 
   function toggleTesting() {
@@ -68,7 +74,15 @@ export default function PracticePage() {
       </div>
       <div className="w-full">
         {recipes.map((recipe) => (
-          <Unit key={recipe.name} name={recipe.name} recipe={recipe.recipe} testMode={showTesting} expaned={showRecipe} />
+          <Accordion expanded={showRecipe} key={recipe.name}>
+            <AccordionSummary aria-controls={`${name}-레시피`} tabIndex={-1}>
+              <div className="flex flex-col gap-1 flex-1">
+                <Typography>{recipe.name}</Typography>
+                {showTesting && <TextField disabled={showRecipe} multiline label="레시피" variant="outlined" fullWidth sx={{ mt: 1 }} />}
+              </div>
+            </AccordionSummary>
+            <AccordionDetails>{recipe.recipe}</AccordionDetails>
+          </Accordion>
         ))}
       </div>
     </div>

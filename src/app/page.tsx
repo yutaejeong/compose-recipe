@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, Paper } from "@mui/material";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -8,7 +8,7 @@ import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { CATEGORIES, Recipe, RECIPES } from "../constants/recipe";
 
 function getRandomInt(min: number, max: number) {
@@ -27,9 +27,7 @@ export default function Home() {
   const elapsedTime = useRef<number>(0);
   const timerRef = useRef<ReturnType<typeof setInterval>>(null);
 
-  useEffect(() => {
-    handleNextQuiz();
-  }, [testingCategories]);
+  const isNothingSelected = !useMemo<boolean>(() => Object.values(testingCategories).reduce((acc, willbeTested) => acc || willbeTested), [testingCategories]);
 
   useEffect(() => {
     if (showRecipe) {
@@ -98,43 +96,47 @@ export default function Home() {
             ))}
           </div>
         </FormGroup>
-        <Card sx={{ width: "100%" }}>
-          <form className="w-full" onSubmitCapture={(e) => handleSubmit(e)}>
-            <CardContent>
-              <div className="mb-3">
-                <Typography variant="h5" component="span">
-                  {quiz.name}
-                </Typography>
-                <Typography variant="h6" component="span" sx={{ ml: 1 }} ref={timerLabelRef} />
-              </div>
-              <TextField
-                multiline
-                autoComplete="off"
-                inputRef={inputRef}
-                disabled={showRecipe}
-                sx={{
-                  width: "100%",
-                }}
-                onFocus={(e) => (e.target.value = "")}
-              />
-              {showRecipe && (
-                <div className="mt-2 py-2 px-3.5 border rounded bg-gray-50">
-                  <Typography variant="body1" sx={{ fontWeight: "600", color: "#444" }}>
-                    {quiz.recipe}
+        {isNothingSelected ? (
+          <Typography>카테고리를 하나 이상 선택해주세요.</Typography>
+        ) : (
+          <Card sx={{ width: "100%" }}>
+            <form className="w-full" onSubmitCapture={(e) => handleSubmit(e)}>
+              <CardContent>
+                <div className="mb-3">
+                  <Typography variant="h5" component="span">
+                    {quiz.name}
                   </Typography>
+                  <Typography variant="h6" component="span" sx={{ ml: 1 }} ref={timerLabelRef} />
                 </div>
-              )}
-            </CardContent>
-            <CardActions>
-              <Button size="small" onClick={handleShowRecipe} type="submit">
-                레시피 확인
-              </Button>
-              <Button size="small" onClick={handleNextQuiz} ref={nextButtonRef}>
-                다음 메뉴
-              </Button>
-            </CardActions>
-          </form>
-        </Card>
+                <TextField
+                  multiline
+                  autoComplete="off"
+                  inputRef={inputRef}
+                  disabled={showRecipe}
+                  sx={{
+                    width: "100%",
+                  }}
+                  onFocus={(e) => (e.target.value = "")}
+                />
+                {showRecipe && (
+                  <div className="mt-2 py-2 px-3.5 border rounded bg-gray-50">
+                    <Typography variant="body1" sx={{ fontWeight: "600", color: "#444" }}>
+                      {quiz.recipe}
+                    </Typography>
+                  </div>
+                )}
+              </CardContent>
+              <CardActions>
+                <Button size="small" onClick={handleShowRecipe} type="submit">
+                  레시피 확인
+                </Button>
+                <Button size="small" onClick={handleNextQuiz} ref={nextButtonRef}>
+                  다음 메뉴
+                </Button>
+              </CardActions>
+            </form>
+          </Card>
+        )}
       </main>
     </div>
   );

@@ -1,8 +1,9 @@
 "use client";
 
 import { CATEGORIES, Category, Recipe, RECIPES } from "@/constants/recipe";
+import { selectMenuImage } from "@/utils";
 import { Edit, EditOff, Shuffle, Visibility, VisibilityOff } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -27,7 +28,9 @@ function shuffleArray<T>(array: T[]): T[] {
 
 export default function PracticePage() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("커피");
-  const [recipes, setRecipes] = useState<Recipe[]>(() => RECIPES.filter((recipe) => recipe.category === selectedCategory));
+  const [recipes, setRecipes] = useState<Recipe[]>(() =>
+    RECIPES.filter((recipe) => recipe.category === selectedCategory),
+  );
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
   const [showTesting, setShowTesting] = useState<boolean>(false);
 
@@ -56,7 +59,13 @@ export default function PracticePage() {
       <div className="w-full flex gap-2">
         <FormControl fullWidth>
           <InputLabel id="category-select-label">카테고리</InputLabel>
-          <Select labelId="category-select-label" id="demo-simple-select" value={selectedCategory} label="카테고리" onChange={handleCategoryChange}>
+          <Select
+            labelId="category-select-label"
+            id="demo-simple-select"
+            value={selectedCategory}
+            label="카테고리"
+            onChange={handleCategoryChange}
+          >
             {CATEGORIES.map((category) => (
               <MenuItem key={category} value={category}>
                 {category}
@@ -78,9 +87,21 @@ export default function PracticePage() {
         {recipes.map((recipe) => (
           <Accordion expanded={showRecipe} key={recipe.name}>
             <AccordionSummary aria-controls={`${recipe.name}-레시피`} tabIndex={-1}>
-              <div className="flex flex-col gap-1 flex-1">
-                <Typography>{recipe.name}</Typography>
-                {showTesting && <TextField disabled={showRecipe} multiline label="레시피" variant="outlined" fullWidth sx={{ mt: 1 }} />}
+              <div className="w-full h-full flex gap-2 items-center">
+                <Avatar alt={recipe.name} src={selectMenuImage(recipe.image_url)} sx={{ width: 56, height: 56 }} />
+                <div className="flex flex-col gap-1 flex-1">
+                  <Typography variant="h6">{recipe.name}</Typography>
+                  {showTesting && (
+                    <TextField
+                      disabled={showRecipe}
+                      multiline
+                      label="레시피"
+                      variant="outlined"
+                      fullWidth
+                      sx={{ mt: 1 }}
+                    />
+                  )}
+                </div>
               </div>
             </AccordionSummary>
             <AccordionDetails>

@@ -1,4 +1,5 @@
-import { Button, LinearProgress } from "@mui/material";
+import { selectMenuImage } from "@/utils";
+import { Button, CardMedia, LinearProgress } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -79,6 +80,11 @@ export default function Testing({ quizes, onFinish }: Props) {
         </Typography>
       </div>
       <Card sx={{ width: "100%", maxWidth: "1000px" }}>
+        <CardMedia
+          sx={{ backgroundSize: "contain", height: "300px" }}
+          image={selectMenuImage(quizes[progress - 1].image_url)}
+          title={quizes[progress - 1].name}
+        />
         <form className="w-full" onSubmitCapture={(e) => handleSubmit(e)}>
           <CardContent>
             <div className="mb-3">

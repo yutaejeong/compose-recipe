@@ -68,6 +68,9 @@ export default function Testing({ quizes, onFinish }: Props) {
       setProgress((prev) => prev + 1);
       setShowRecipe(false);
       restartTimer();
+      if (inputRef.current) {
+        inputRef.current.value = "";
+      }
     }
   }
 

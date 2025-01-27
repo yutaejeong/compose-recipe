@@ -105,7 +105,7 @@ export default function PracticePage() {
               </div>
             </AccordionSummary>
             <AccordionDetails>
-              <div className="py-2 px-3.5 border rounded bg-gray-50">
+              <div className="py-2 px-3.5 border rounded bg-gray-50 ml-16">
                 <Typography variant="body1" sx={{ fontWeight: "600", color: "#444" }}>
                   {recipe.recipe}
                 </Typography>

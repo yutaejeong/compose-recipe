@@ -470,11 +470,11 @@ export const RECIPES: Recipe[] = [
     name: "페퍼민트, 캐모마일, 로즈마리, 얼그레이, 블랙퍼스트 HOT",
     recipe: "종이컵 / 티백 한 개 + 뜨거운 물 350g",
     image_url: [
-      "/images/ICE_페퍼민트.jpg",
-      "/images/ICE_캐모마일.jpg",
-      "/images/ICE_로즈마리.jpg",
-      "/images/ICE_얼그레이.jpg",
-      "/images/ICE_블랙퍼스트.jpg",
+      "/images/HOT_페퍼민트.jpg",
+      "/images/HOT_캐모마일.jpg",
+      "/images/HOT_로즈마리.jpg",
+      "/images/HOT_얼그레이.jpg",
+      "/images/HOT_블랙퍼스트.jpg",
     ],
   },
   {
@@ -482,11 +482,11 @@ export const RECIPES: Recipe[] = [
     name: "페퍼민트, 캐모마일, 로즈마리, 얼그레이, 블랙퍼스트 ICE",
     recipe: "계량컵 / 티백 한 개 + 뜨거운 물 200g / 2분 우리기 / 얼음",
     image_url: [
-      "/images/HOT_페퍼민트.jpg",
-      "/images/HOT_캐모마일.jpg",
-      "/images/HOT_로즈마리.jpg",
-      "/images/HOT_얼그레이.jpg",
-      "/images/HOT_블랙퍼스트.jpg",
+      "/images/ICE_페퍼민트.jpg",
+      "/images/ICE_캐모마일.jpg",
+      "/images/ICE_로즈마리.jpg",
+      "/images/ICE_얼그레이.jpg",
+      "/images/ICE_블랙퍼스트.jpg",
     ],
   },
   {
@@ -607,16 +607,15 @@ export const RECIPES: Recipe[] = [
   },
   {
     category: "시즌한정",
-    name: "생딸기레몬레몬글라스티 HOT",
-    recipe:
-      "종이컵 / 딸기베이스 30g + 레몬에이드 10g + 레본레몬글라스티백 1개 + 다진생딸기 20g + 뜨거운 물 260g / 믹스",
+    name: "생딸기레몬그라스티 HOT",
+    recipe: "종이컵 / 딸기베이스 30g + 레몬에이드 10g + 레몬그라스티백 1개 + 다진생딸기 20g + 뜨거운 물 260g / 믹스",
     image_url: "/images/HOT_생딸기_레몬글라스티.jpg",
   },
   {
     category: "시즌한정",
-    name: "생딸기레몬레몬글라스티 ICE",
+    name: "생딸기레몬그라스티 ICE",
     recipe:
-      "계량컵 / 레몬레몬글라스티백 1개 + 뜨거운 물 100g / 컵에 딸기베이스 30g + 레몬에이드 10g + 다진생딸기 20g + 얼음 가득 / 우린 티 담기 / 물 100g / 믹스",
+      "계량컵 / 레몬그라스티백 1개 + 뜨거운 물 100g / 컵에 딸기베이스 30g + 레몬에이드 10g + 다진생딸기 20g + 얼음 가득 / 우린 티 담기 / 물 100g / 믹스",
     image_url: "/images/ICE_생딸기_레몬글라스티.jpg",
   },
   {

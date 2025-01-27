@@ -29,11 +29,16 @@ export default function Home() {
     <div className="flex flex-col items-center justify-items-center min-h-dvh p-8 pb-20 gap-6 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="w-full items-center flex flex-col gap-8">
         <div className="flex gap-2">
-          <Button variant="contained" onClick={() => endTest()}>
-            처음으로
-          </Button>
+          {currentStep !== "standby" && (
+            <Button variant="contained" onClick={() => endTest()}>
+              처음으로
+            </Button>
+          )}
           <Link href="/practice">
             <Button variant="contained">연습 페이지로</Button>
+          </Link>
+          <Link href="/cgv-schedules">
+            <Button variant="contained">오늘의 CGV 스케줄</Button>
           </Link>
         </div>
         {currentStep === "standby" && <StandBy onStart={(testingCategories) => startTest(testingCategories)} />}

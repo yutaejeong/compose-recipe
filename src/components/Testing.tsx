@@ -131,6 +131,10 @@ export default function Testing({ quizes, onFinish }: Props) {
                   {Math.floor(totalElapsedTime.current / 60)} 분 {(totalElapsedTime.current % 60).toFixed(2)}초
                 </b>
               </Typography>
+              <Typography>
+                문제당 평균 소요 시간:&nbsp;
+                <b>{(totalElapsedTime.current / quizes.length).toFixed(2)} 초</b>
+              </Typography>
               <Button variant="text" onClick={() => onFinish()}>
                 종료
               </Button>

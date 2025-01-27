@@ -14,9 +14,10 @@ interface Props {
 }
 
 export default function StandBy({ onStart }: Props) {
-  const [categoryConfigurations, setCategoryConfigurations] = useState<CategoryConfiguration[]>(
-    CATEGORIES.map((category_name) => ({ category_name, test_yn: true })),
-  );
+  const [categoryConfigurations, setCategoryConfigurations] = useState<CategoryConfiguration[]>([
+    { category_name: CATEGORIES[0], test_yn: true },
+    ...CATEGORIES.slice(1).map((category_name) => ({ category_name, test_yn: false })),
+  ]);
   const isNothingSelected = !useMemo(
     () => categoryConfigurations.reduce((acc, cur) => acc || cur.test_yn, false),
     [categoryConfigurations],
@@ -34,6 +35,14 @@ export default function StandBy({ onStart }: Props) {
       [],
     );
     onStart(testingCategories);
+  }
+
+  function handleAllCheck() {
+    if (categoryConfigurations.reduce<boolean>((acc, config) => acc && config.test_yn, true)) {
+      setCategoryConfigurations(categoryConfigurations.map((config) => ({ ...config, test_yn: false })));
+    } else {
+      setCategoryConfigurations(categoryConfigurations.map((config) => ({ ...config, test_yn: true })));
+    }
   }
 
   return (
@@ -54,6 +63,15 @@ export default function StandBy({ onStart }: Props) {
           ))}
         </div>
       </FormGroup>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={categoryConfigurations.reduce<boolean>((acc, config) => acc && config.test_yn, true)}
+            onChange={(e) => handleAllCheck()}
+          />
+        }
+        label="전체 선택"
+      />
       <Button variant="contained" disabled={isNothingSelected} onClick={() => handleStart()}>
         시작하기
       </Button>

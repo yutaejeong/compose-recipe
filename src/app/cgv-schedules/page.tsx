@@ -1,6 +1,7 @@
 "use client";
 
-import { Card, CardContent, CardMedia, Chip, CircularProgress, Divider, Typography } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, Chip, CircularProgress, Divider, Typography } from "@mui/material";
+import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import { getCgvSchedules, Schedule } from "./actions";
 
@@ -11,7 +12,7 @@ export default function CgvSchedulePage() {
   useEffect(() => {
     getCgvSchedules().then((data) => {
       setSchedules(
-        data.filter((schedule) => !!schedule.startTime).sort((a, b) => parseInt(a.endTime) - parseInt(b.endTime)),
+        data.filter((schedule) => !!schedule.startTime).sort((a, b) => parseInt(a.startTime) - parseInt(b.startTime)),
       );
       setLoading(false);
     });
@@ -19,6 +20,9 @@ export default function CgvSchedulePage() {
 
   return (
     <div className="flex flex-col items-center justify-items-center min-h-dvh p-8 pb-20 gap-6 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <Link href="/">
+        <Button variant="contained">메인 페이지로</Button>
+      </Link>
       {loading && <CircularProgress size="3rem" />}
       {schedules.map((schedule, i) => (
         <Fragment key={`${schedule.title}-${i}`}>
@@ -26,14 +30,14 @@ export default function CgvSchedulePage() {
             if (i == 0) {
               return (
                 <Divider sx={{ width: "100%", maxWidth: "1000px" }}>
-                  <Chip label={`${schedule.endTime.substring(0, 2)}:00`} size="medium" />
+                  <Chip label={`${schedule.startTime.substring(0, 2)}:00`} size="medium" />
                 </Divider>
               );
             }
-            if (schedules[i - 1].endTime.substring(0, 2) !== schedule.endTime.substring(0, 2)) {
+            if (schedules[i - 1].startTime.substring(0, 2) !== schedule.startTime.substring(0, 2)) {
               return (
                 <Divider sx={{ width: "100%", maxWidth: "1000px" }}>
-                  <Chip label={`${schedule.endTime.substring(0, 2)}:00`} size="medium" />
+                  <Chip label={`${schedule.startTime.substring(0, 2)}:00`} size="medium" />
                 </Divider>
               );
             }
@@ -55,10 +59,10 @@ export default function CgvSchedulePage() {
                 {schedule.title}
               </Typography>
               <Typography variant="subtitle1">
-                {schedule.startTime.substring(0, 2)}:{schedule.startTime.substring(2)} ~{" "}
                 <strong>
-                  {schedule.endTime.substring(0, 2)}:{schedule.endTime.substring(2)}
-                </strong>
+                  {schedule.startTime.substring(0, 2)}:{schedule.startTime.substring(2)}
+                </strong>{" "}
+                ~ {schedule.endTime.substring(0, 2)}:{schedule.endTime.substring(2)}
               </Typography>
               <Typography variant="subtitle1">
                 <strong>{schedule.bookedSeats}석</strong> 예매됨

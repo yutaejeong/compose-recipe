@@ -1,5 +1,3 @@
-"use server";
-
 export interface HourlyData {
   hour: string; // YYYYMMDDHH 형식의 시간 정보
   avgAmtSum: number; // 해당 시간의 평균 결제 금액 (원)
@@ -62,10 +60,21 @@ type CityDataResponse = {
   AREA_CD: string;
 };
 
+export type CurrentStatus = {
+  CMRCL_TIME: string;
+  RSB_PAYMENT_LVL: string;
+  RSB_SH_PAYMENT_CNT: number;
+};
+
 export async function getCityData() {
   const response = await fetch(
     `http://openapi.seoul.go.kr:8088/${process.env.OPEN_API_KEY}/json/citydata_cmrcl/1/5/왕십리역`,
   );
   const data: CityDataResponse = await response.json();
-  return data;
+  const cafeData = data.LIVE_CMRCL_STTS.CMRCL_RSB.filter((item) => item.RSB_MID_CTGR === "제과/커피/패스트푸드")[0];
+  return {
+    CMRCL_TIME: data.LIVE_CMRCL_STTS.CMRCL_TIME,
+    RSB_PAYMENT_LVL: cafeData?.RSB_PAYMENT_LVL,
+    RSB_SH_PAYMENT_CNT: cafeData?.RSB_SH_PAYMENT_CNT,
+  };
 }

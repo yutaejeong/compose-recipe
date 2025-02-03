@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import { useState } from "react";
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -56,7 +57,10 @@ export default function PracticePage() {
 
   return (
     <div className="flex flex-col items-center justify-items-center min-h-dvh p-8 pb-20 gap-6 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div className="w-full flex gap-2">
+      <Link href="/">
+        <Button variant="contained">메인 페이지로</Button>
+      </Link>
+      <div className="w-full max-w-[1000px] flex gap-2">
         <FormControl fullWidth>
           <InputLabel id="category-select-label">카테고리</InputLabel>
           <Select
@@ -83,7 +87,7 @@ export default function PracticePage() {
           {showRecipe ? <VisibilityOff /> : <Visibility />}
         </Button>
       </div>
-      <div className="w-full">
+      <div className="w-full max-w-[1000px]">
         {recipes.map((recipe) => (
           <Accordion expanded={showRecipe} key={recipe.name}>
             <AccordionSummary aria-controls={`${recipe.name}-레시피`} tabIndex={-1}>

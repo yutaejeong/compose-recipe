@@ -44,7 +44,7 @@ export async function getCgvSchedules() {
   headers.append("Pragma", "no-cache");
   headers.append("Referer", `http://www.cgv.co.kr/theaters/?areacode=01&theaterCode=0074&date=${getKSTDateString()}`);
   headers.append("Upgrade-Insecure-Requests", "1");
-  headers.append("Cookie", `ASP.NET_SessionId=${randomUUID()}`);
+  headers.append("Cookie", `ASP.NET_SessionId=${randomUUID()}`); // 임의의 세션ID 생성
 
   const response = await fetch(
     `http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=01&theatercode=0074&date=${getKSTDateString()}`,
@@ -98,5 +98,7 @@ export async function getCgvSchedules() {
       });
   });
 
-  return schedules;
+  return schedules
+    .filter((schedule) => !!schedule.startTime)
+    .sort((a, b) => parseInt(a.startTime) - parseInt(b.startTime));
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { CurrentStatus } from "@/app/commercial-status/action";
+import { CurrentStatus } from "@/app/commercial-status/actions";
 import { Card, CardContent, Typography } from "@mui/material";
 import { use } from "react";
 
@@ -10,6 +10,20 @@ interface Props {
 
 export default function CurrentPaymentLevel({ currentPaymentLevelPromise }: Props) {
   const data = use(currentPaymentLevelPromise);
+
+  if (!data.RSB_PAYMENT_LVL || !data.RSB_SH_PAYMENT_CNT) {
+    return (
+      <Card sx={{ width: "300px" }}>
+        <CardContent>
+          <Typography sx={{ color: "text.secondary", fontSize: 14 }}>
+            <span className="inline-block rounded-full w-2 h-2 bg-red-600 animate-pulse mr-1" />
+            실시간 활성도
+          </Typography>
+          <Typography variant="h5">정보없음</Typography>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card sx={{ width: "300px" }}>

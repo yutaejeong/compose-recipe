@@ -2,6 +2,7 @@
 
 import * as cheerio from "cheerio";
 import { randomUUID } from "crypto";
+import { revalidateTag } from "next/cache";
 
 // 영화 스케줄 타입 정의
 export interface Schedule {

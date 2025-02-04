@@ -1,6 +1,7 @@
 "use client";
 
-import { HourlyData } from "@/app/commercial-status/action";
+import { HourlyData } from "@/app/commercial-status/actions";
+import { Typography } from "@mui/material";
 import { BarPlot, ChartsXAxis, ChartsYAxis, LinePlot, MarkPlot, ResponsiveChartContainer } from "@mui/x-charts";
 import { use } from "react";
 
@@ -10,6 +11,10 @@ interface Props {
 
 export default function CommercialStatusChart({ commercialStatusPromise }: Props) {
   const last24HoursData = use(commercialStatusPromise);
+
+  if (last24HoursData.reduce<boolean>((acc, item) => item.avgAmtSum === 0 && acc, true)) {
+    return <Typography variant="h6">상권 활성도 데이터를 불러오지 못 했습니다 🫤</Typography>;
+  }
 
   return (
     <ResponsiveChartContainer

@@ -2,8 +2,10 @@ import CommercialStatusChart from "@/components/commercial-status/CommercialStat
 import { Button, CircularProgress } from "@mui/material";
 import Link from "next/link";
 import { Suspense } from "react";
-import { getCityData, getCommercialStatus } from "./action";
+import { getCityData, getCommercialStatus } from "./actions";
 import CurrentPaymentLevel from "@/components/commercial-status/CurrentPaymentLevel";
+
+export const revalidate = 0;
 
 export default function CommercialStatusPage() {
   return (

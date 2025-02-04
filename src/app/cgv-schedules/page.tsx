@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { getCgvSchedules } from "./actions";
 
+export const revalidate = 0;
+
 export default function CgvSchedulePage() {
   return (
     <div className="flex flex-col items-center justify-items-center min-h-dvh p-8 pb-20 gap-6 sm:p-20 font-[family-name:var(--font-geist-sans)]">

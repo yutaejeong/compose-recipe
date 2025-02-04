@@ -11,6 +11,10 @@ interface Props {
 export default function ScheduleList({ schedulesPromise }: Props) {
   const schedules = use(schedulesPromise);
 
+  if (schedules.length === 0) {
+    return <Typography variant="h6">오늘의 상영 스케줄이 더 이상 없습니다 😎</Typography>;
+  }
+
   return schedules.map((schedule, i) => (
     <Fragment key={`${schedule.title}-${i}`}>
       {(() => {

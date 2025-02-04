@@ -1,3 +1,5 @@
+"use server";
+
 export interface HourlyData {
   hour: string; // YYYYMMDDHH 형식의 시간 정보
   avgAmtSum: number; // 해당 시간의 평균 결제 금액 (원)

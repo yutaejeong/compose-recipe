@@ -395,7 +395,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "과일스무디",
     name: "유자스무디	ICE",
-    recipe: "블렌더볼 / 유자청 100g + 레몬후르츠 1펌프 + 물 140g + 얼음 / 믹스 2번 / 유자청 30g 토핑",
+    recipe: "블렌더볼 / 유자스무디 100g + 레몬후르츠 1펌프 + 물 140g + 얼음 / 믹스 2번 / 유자청 30g 토핑",
     image_url: "/images/유자스무디.jpg",
   },
   {
@@ -426,25 +426,25 @@ export const RECIPES: Recipe[] = [
   {
     category: "에이드",
     name: "자몽에이드	ICE",
-    recipe: "아이스컵 / 자몽농축액 40g + 사이다 250ml / 섞기 / 얼음 / 자몽슬라이스 1개 토핑",
+    recipe: "아이스컵 / 자몽에이드 40g + 사이다 250ml / 섞기 / 얼음 / 자몽슬라이스 1개 토핑",
     image_url: "/images/자몽에이드.jpg",
   },
   {
     category: "에이드",
     name: "레몬에이드	ICE",
-    recipe: "아이스컵 / 레몬농축액 40g + 사이다 250ml / 섞기 / 얼음 / 레몬슬라이스 1개 토핑",
+    recipe: "아이스컵 / 레몬에이드 40g + 사이다 250ml / 섞기 / 얼음 / 레몬슬라이스 1개 토핑",
     image_url: "/images/레몬에이드.jpg",
   },
   {
     category: "에이드",
     name: "망고에이드	ICE",
-    recipe: "아이스컵 / 망고농축액 40g + 사이다 250ml / 섞기 / 얼음",
+    recipe: "아이스컵 / 망고퓨레 40g + 사이다 250ml / 섞기 / 얼음",
     image_url: "/images/망고에이드.jpg",
   },
   {
     category: "에이드",
     name: "청포도에이드	ICE",
-    recipe: "아이스컵 / 청포도농축액 50g + 사이다 250ml / 섞기 / 얼음",
+    recipe: "아이스컵 / 청포도에이드 50g + 사이다 250ml / 섞기 / 얼음",
     image_url: "/images/청포도_스페셜에이드.jpg",
   },
   {

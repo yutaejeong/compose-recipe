@@ -11,6 +11,7 @@ export const CATEGORIES = [
   "차",
   "과일주스",
   "시즌한정",
+  "콤보",
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];
@@ -86,7 +87,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "커피",
     name: "카라멜마끼아또	HOT",
-    recipe: "종이컵 / 카라멜소스 30g + 설탕시럽 2펌프 + 스팀우유 250g / 섞기 / 베리에이션 2샷 / 카라멜소스 토핑",
+    recipe: "종이컵 / 카라멜소스 30g + 설탕시럽 2펌프 + 베리에이션 2샷 / 섞기 / 스팀우유 250g / 카라멜소스 토핑",
     image_url: "/images/HOT_카라멜마끼아또.jpg",
   },
   {
@@ -106,7 +107,7 @@ export const RECIPES: Recipe[] = [
     category: "커피",
     name: "카페모카	ICE",
     recipe:
-      "아이스컵 / 초코소스 30g + 설탕시럽 2펌프 + 베리에이션 2샷 / 샷 포함 우유 250선 / 섞기 / 얼음 / 휘핑 + 초코소스 + 바리스타카카오 토핑 ",
+      "아이스컵 / 초코소스 30g + 설탕시럽 2펌프 + 베리에이션 2샷 / 섞기 / 샷 포함 우유 250선 / 얼음 / 휘핑 + 초코소스 + 바리스타카카오 토핑",
     image_url: "/images/ICE_카페모카.jpg",
   },
   {
@@ -124,7 +125,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "커피",
     name: "흑당카페라떼	ICE",
-    recipe: "아이스컵 / 흑당소스 45g 두르기 / 우유 200g / 얼음 / 샷추가 1번 버튼",
+    recipe: "아이스컵 / 우유 200g / 흑당소스 45g 두르기 / 얼음 / 샷추가 1번 버튼",
     image_url: "/images/흑당카페라떼.jpg",
   },
   {
@@ -169,7 +170,7 @@ export const RECIPES: Recipe[] = [
     category: "커피",
     name: "아인슈페너(더치) ICE",
     recipe:
-      "아이스컵 / 물 100g + 콜드브루파우치 + 설탕시럽 1펌프 + 바닐라시럽 0.5펌프 / 얼음 밑선 / 에어레이팅볼 ( 설탕시럽 1.5펌프 + 밀크쉐이크베이스 70g / 믹스 2번) / 바리스타카카오토핑",
+      "아이스컵 / 물 100g + 콜드브루파우치 + 설탕시럽 1펌프 + 바닐라시럽 0.5펌프 / 얼음 밑선 / 에어레이팅볼 (설탕시럽 1.5펌프 + 밀크쉐이크베이스 70g / 믹스 2번) / 바리스타카카오토핑",
     image_url: "/images/아인슈페너.jpg",
   },
   {
@@ -187,7 +188,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "커피",
     name: "디카페인더치라떼	HOT",
-    recipe: "스팀피쳐 / 디카페인 파우치 + 우유 260g / 스팀",
+    recipe: "스팀피쳐 / 디카페인파우치 + 우유 260g / 스팀",
     image_url: "/images/HOT_디카페인_더치라떼.jpg",
   },
   {
@@ -205,8 +206,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "논커피",
     name: "곡물라떼	ICE",
-    recipe:
-      "블렌더볼 / 우유 250g + 곡물파우더 60g + 설탕시럽 1.5펌프 / 믹스1번 / 얼음가득 컵에 따르기 / 아몬드슬라이스 토핑",
+    recipe: "블렌더볼 / 우유 250g + 곡물파우더 60g + 설탕시럽 1.5펌프 / 믹스 1번 / 얼음 / 아몬드슬라이스 토핑",
     image_url: "/images/ICE_곡물라떼.jpg",
   },
   {
@@ -261,20 +261,19 @@ export const RECIPES: Recipe[] = [
     category: "논커피",
     name: "민트초코오레오라떼	HOT",
     recipe:
-      "스팀피쳐 / 우유 300g + 민트초코파우더 40g + 설탕시럽 1펌프 / 스팀/ 종이컵에 따르기 / 휘핑 + 초코소스 + 쿠키크럼 + 오레오쿠키 토핑",
+      "스팀피쳐 / 우유 300g + 민트초코파우더 40g + 설탕시럽 1펌프 / 스팀 / 종이컵에 따르기 / 휘핑 + 초코소스 + 쿠키크럼 + 오레오쿠키 토핑",
     image_url: "/images/HOT_민트초코오레오라떼.jpg",
   },
   {
     category: "논커피",
     name: "민트초코오레오라떼	ICE",
-    recipe:
-      "아이스컵 / 우유 250g + 민트초코파우더 40g / 섞기 / 컵에 따르기 / 얼음 / 휘핑 + 초코소스 + 쿠키크럼 + 오레오쿠키 토핑",
+    recipe: "아이스컵 / 우유 250g + 민트초코파우더 40g / 섞기 / 얼음 / 휘핑 + 초코소스 + 쿠키크럼 + 오레오쿠키 토핑",
     image_url: "/images/ICE_민트초코오레오라떼.jpg",
   },
   {
     category: "논커피",
     name: "흑당밀크	ICE",
-    recipe: "아이스컵 / 흑당소스 50g 두르기 / 우유 250g / 얼음",
+    recipe: "아이스컵 / 우유 250g / 흑당소스 50g 두르기 / 얼음",
     image_url: "/images/흑당밀크(우유).jpg",
   },
   {
@@ -357,7 +356,7 @@ export const RECIPES: Recipe[] = [
     category: "밀크쉐이크",
     name: "쿠키밀크쉐이크	ICE",
     recipe:
-      "블렌더볼 / 밀크쉐이크베이스 150g + 설탕시럽 3펌프 + 밀크쉐이크베이스 40g + 얼음 / 믹스 3번 / 로투스크럼블 20g 섞고 / 컵 벽면에 카라멜 소스 두르기 / 로투스크럼블 10g + 로투스 1개",
+      "블렌더볼 / 밀크쉐이크베이스 150g + 설탕시럽 3펌프 + 밀크쉐이크베이스 40g + 얼음 / 믹스 3번 / 로투스크럼블 15g 섞고 / 컵 벽면에 카라멜 소스 두르기 / 로투스크럼블 10g + 로투스 1개",
     image_url: "/images/쿠키_밀크쉐이크.jpg",
   },
   {
@@ -637,15 +636,69 @@ export const RECIPES: Recipe[] = [
     image_url: "/images/빅포즈_아망추.jpg",
   },
   {
-    category: "차",
+    category: "커피",
     name: "아샷추",
     recipe: "아이스컵 / 아이스티베이스 300선 + 얼음 / 에스프레소 2샷",
     image_url: "/images/아샷추.jpg",
   },
   {
-    category: "차",
+    category: "커피",
     name: "빅포즈 아샷추",
     recipe: "빅포즈컵 / 아이스티베이스 450g + 얼음 / 에스프레소 2샷",
     image_url: "/images/빅포즈_아샷추.jpg",
+  },
+  {
+    category: "콤보",
+    name: "라떼는 말차야",
+    recipe: "아이스 카페라떼 + 말차 팝콘",
+    image_url: "/images/라떼는 말차야.jpg",
+  },
+  {
+    category: "콤보",
+    name: "커피엔 역시 커피빵",
+    recipe: "아이스 아메리카노 + 커피콩빵",
+    image_url: "/images/커피엔 역시 커피빵.jpg",
+  },
+  {
+    category: "콤보",
+    name: "묻고 더블샷으로 가",
+    recipe: "커피 밀크쉐이크 + 더블샷 카라멜 팝콘",
+    image_url: "/images/묻고 더블샷으로 가.jpg",
+  },
+  {
+    category: "콤보",
+    name: "쫀득카노",
+    recipe: "아이스 아메리카노 + 쫀득 쿠키",
+    image_url: "/images/쫀득카노.jpg",
+  },
+  {
+    category: "콤보",
+    name: "헨젤과 프레첼",
+    recipe: "아이스티 + 미니 프레첼",
+    image_url: "/images/헨젤과 프레첼.jpg",
+  },
+  {
+    category: "콤보",
+    name: "붕어는 T입니다",
+    recipe: "아이스 밀크티 + 팥 미니붕어빵",
+    image_url: "/images/붕어는 T입니다.jpg",
+  },
+  {
+    category: "콤보",
+    name: "딸기가 부라운 붕어",
+    recipe: "딸기라떼 + 브라운 붕어딕만스 쿠키",
+    image_url: "/images/딸기가 부라운 붕어.jpg",
+  },
+  {
+    category: "콤보",
+    name: "멜로드라마 쉐이크",
+    recipe: "커피 밀크쉐이크 + 초코마쉬멜로",
+    image_url: "/images/멜로드라마 쉐이크.jpg",
+  },
+  {
+    category: "콤보",
+    name: "아아~ 초코볼~",
+    recipe: "아이스 아메리카노 + 초코볼",
+    image_url: "/images/아아~ 초코볼~.jpg",
   },
 ];

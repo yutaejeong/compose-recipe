@@ -7,6 +7,7 @@ import { shuffleArray } from "@/utils";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { useState } from "react";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 type Step = "standby" | "testing" | "finish";
 
@@ -44,6 +45,11 @@ export default function Home() {
               <Link href="/commercial-status">
                 <Button variant="contained">오늘의 혼잡도</Button>
               </Link>
+              <a href="https://data.seoul.go.kr/SeoulRtd/?hotspotNm=왕십리역" target="_blank">
+                <Button variant="contained">
+                  <OpenInNewIcon />
+                </Button>
+              </a>
             </>
           )}
         </div>

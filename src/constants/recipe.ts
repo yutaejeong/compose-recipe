@@ -10,7 +10,6 @@ export const CATEGORIES = [
   "에이드",
   "차",
   "과일주스",
-  "시즌한정",
   "콤보",
 ] as const;
 
@@ -92,8 +91,15 @@ export const RECIPES: Recipe[] = [
   },
   {
     category: "커피",
-    name: "카라멜마끼아또	ICE",
+    name: "카라멜마끼아또	ICE (베이스)",
     recipe: "아이스컵 / 카라멜베이스 200선 / 얼음 / 베리에이션 2샷 / 카라멜소스 토핑",
+    image_url: "/images/ICE_카라멜마끼아또.jpg",
+  },
+  {
+    category: "커피",
+    name: "카라멜마끼아또	ICE (한 잔 분량)",
+    recipe:
+      "아이스컵 / 카라멜소스 25g + 바닐라시럽 0.5펌프 + 설탕시럽 2펌프 + 우유 200선 / 섞기 / 얼음 / 베리에이션 2샷 / 카라멜소스 토핑",
     image_url: "/images/ICE_카라멜마끼아또.jpg",
   },
   {
@@ -229,8 +235,15 @@ export const RECIPES: Recipe[] = [
   },
   {
     category: "논커피",
-    name: "더블초코라떼	ICE",
+    name: "더블초코라떼	ICE (베이스)",
     recipe: "아이스컵 / 더블초코페이스 300선 / 얼음 / 휘핑 + 초소소스 + 초콜릿청크 토핑",
+    image_url: "/images/ICE_더블초코라떼.jpg",
+  },
+  {
+    category: "논커피",
+    name: "더블초코라떼	ICE (한 잔 분량)",
+    recipe:
+      "스팀피쳐 / 초코소스 20g + 바리스타카카오 5g + 설탕시럽 2.5펌프 + 더블초코파우더 10g + 우유 50g / 섞기 / 데우기 / 우유 200 + 얼음 / 휘핑 + 초코소스 + 초콜릿청크 토핑",
     image_url: "/images/ICE_더블초코라떼.jpg",
   },
   {
@@ -253,8 +266,15 @@ export const RECIPES: Recipe[] = [
   },
   {
     category: "논커피",
-    name: "쿠키초코라떼	ICE",
+    name: "쿠키초코라떼	ICE (베이스)",
     recipe: "아이스컵 / 쿠앤크베이스 300선 / 얼음 / 휘핑 + 초소소스 + 쿠키크럼 토핑",
+    image_url: "/images/ICE_쿠키초코라떼.jpg",
+  },
+  {
+    category: "논커피",
+    name: "쿠키초코라떼	ICE (한 잔 분량)",
+    recipe:
+      "스팀피쳐 / 쿠키앤크림파우더 40g + 설탕시럽 3펌프 + 쿠키크럼 10g + 우유 50g / 섞기 / 데우기 / 우유 200 + 얼음 / 휘핑 + 초코소스 + 쿠키크럼 토핑",
     image_url: "/images/ICE_쿠키초코라떼.jpg",
   },
   {
@@ -284,8 +304,15 @@ export const RECIPES: Recipe[] = [
   },
   {
     category: "논커피",
-    name: "밀크티	ICE",
+    name: "밀크티	ICE (베이스)",
     recipe: "아이스컵 / 밀크티베이스 300선 / 얼음",
+    image_url: "/images/ICE_밀크티.jpg",
+  },
+  {
+    category: "논커피",
+    name: "밀크티	ICE (한 잔 분량)",
+    recipe:
+      "계량컵 / 얼그레이티백 1개 + 뜨거운 물 50 / 3분 우리기 / 밀크티파우더 20g + 바닐라시럽 1펌프 / 우린 티 넣고 섞기 / 우유 200 + 얼음",
     image_url: "/images/ICE_밀크티.jpg",
   },
   {
@@ -579,45 +606,6 @@ export const RECIPES: Recipe[] = [
     image_url: "/images/샤인머스캣케일주스.jpg",
   },
   {
-    category: "시즌한정",
-    name: "생딸기모찌밀크쉐이크	ICE",
-    recipe:
-      "블렌더볼 / 밀크쉐이크베이스 150g + 밀크쉐이크파우더 40g + 설탕시럽 2펌프 + 딸기베이스 90g + 얼음 280g / 믹스 3번 / 컵에 옮겨 담기 / 휘핑 + 1/2생딸기 1개 + 1/2 모찌 4개",
-    image_url: "/images/생딸기_모찌_밀크쉐이크.jpg",
-  },
-  {
-    category: "시즌한정",
-    name: "생딸기가나슈라떼	ICE",
-    recipe: "아이스컵 / 딸기베이스 60g + 얼음 가득 + 우유 200g / 딸기가나슈 1스쿱 + 다진생딸기 20g 토핑",
-    image_url: "/images/생딸기_가나슈_라떼.jpg",
-  },
-  {
-    category: "시즌한정",
-    name: "생딸기망고아이스티	ICE",
-    recipe: "아이스컵 / 딸기아이스티베이스 300선 + 얼음가득 / 냉동망고다이스 80g + 다진생딸기 20g 토핑",
-    image_url: "/images/생딸기_망고_아이스티.jpg",
-  },
-  {
-    category: "시즌한정",
-    name: "생딸기주스	ICE",
-    recipe:
-      "블렌더볼 / 갈아만든딸기주스 1팩 + 물 180g / 믹스 2번 / 블렌더볼에 다진생딸기 20g 넣고 믹스 / 컵에 옮겨 담기 / 얼음 가득",
-    image_url: "/images/생딸기주스.jpg",
-  },
-  {
-    category: "시즌한정",
-    name: "생딸기레몬그라스티 HOT",
-    recipe: "종이컵 / 딸기베이스 30g + 레몬에이드 10g + 레몬그라스티백 1개 + 다진생딸기 20g + 뜨거운 물 260g / 믹스",
-    image_url: "/images/HOT_생딸기_레몬글라스티.jpg",
-  },
-  {
-    category: "시즌한정",
-    name: "생딸기레몬그라스티 ICE",
-    recipe:
-      "계량컵 / 레몬그라스티백 1개 + 뜨거운 물 100g / 컵에 딸기베이스 30g + 레몬에이드 10g + 다진생딸기 20g + 얼음 가득 / 우린 티 담기 / 물 100g / 믹스",
-    image_url: "/images/ICE_생딸기_레몬글라스티.jpg",
-  },
-  {
     category: "차",
     name: "빅포즈 아이스티",
     recipe: "빅포즈컵 / 아이스티베이스 450g + 얼음",
@@ -626,19 +614,19 @@ export const RECIPES: Recipe[] = [
   {
     category: "차",
     name: "아망추",
-    recipe: "아이스컵 / 아이스티베이스 300선 + 얼음 / 냉동망고 80g",
+    recipe: "아이스컵 / 아이스티베이스 300선 / 얼음 밑선 / 냉동망고 80g",
     image_url: "/images/아망추.jpg",
   },
   {
     category: "차",
     name: "빅포즈 아망추",
-    recipe: "빅포즈컵 / 아이스티베이스 450g + 얼음 / 냉동망고 120g",
+    recipe: "빅포즈컵 / 아이스티베이스 450g / 얼음 밑선 / 냉동망고 120g",
     image_url: "/images/빅포즈_아망추.jpg",
   },
   {
     category: "커피",
     name: "아샷추",
-    recipe: "아이스컵 / 아이스티베이스 300선 + 얼음 / 에스프레소 2샷",
+    recipe: "아이스컵 / 아이스티베이스 300선 / 얼음 / 에스프레소 2샷 / 레몬슬라이스 토핑",
     image_url: "/images/아샷추.jpg",
   },
   {

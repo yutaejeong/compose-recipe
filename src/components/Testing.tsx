@@ -5,7 +5,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Recipe } from "../constants/recipe";
 
 interface Props {
@@ -15,14 +15,17 @@ interface Props {
 
 export default function Testing({ quizes, onFinish }: Props) {
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(1);
+  const [isFinished, setIsFinished] = useState<boolean>(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
   const timerLabelRef = useRef<HTMLSpanElement>(null);
   const elapsedTime = useRef<number>(0);
-  const timerRef = useRef<ReturnType<typeof setInterval>>(null);
-  const [progress, setProgress] = useState<number>(1);
   const totalElapsedTime = useRef<number>(0);
-  const [isFinished, setIsFinished] = useState<boolean>(false);
+  const timerRef = useRef<ReturnType<typeof setInterval>>(null);
+
+  const menuImage = useMemo(() => selectMenuImage(quizes[progress - 1].image_url), [progress]);
 
   useEffect(() => {
     restartTimer();
@@ -85,7 +88,7 @@ export default function Testing({ quizes, onFinish }: Props) {
       <Card sx={{ width: "100%", maxWidth: "1000px" }}>
         <CardMedia
           sx={{ backgroundSize: "contain", height: "300px" }}
-          image={selectMenuImage(quizes[progress - 1].image_url)}
+          image={menuImage}
           title={quizes[progress - 1].name}
         />
         <form className="w-full" onSubmitCapture={(e) => handleSubmit(e)}>

@@ -11,6 +11,8 @@ export const CATEGORIES = [
   "차",
   "과일주스",
   "콤보",
+  "신메뉴",
+  "한 잔 레시피",
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];
@@ -96,7 +98,7 @@ export const RECIPES: Recipe[] = [
     image_url: "/images/ICE_카라멜마끼아또.jpg",
   },
   {
-    category: "커피",
+    category: "한 잔 레시피",
     name: "카라멜마끼아또	ICE (한 잔 분량)",
     recipe:
       "아이스컵 / 카라멜소스 25g + 바닐라시럽 0.5펌프 + 설탕시럽 2펌프 + 우유 200선 / 섞기 / 얼음 / 베리에이션 2샷 / 카라멜소스 토핑",
@@ -271,7 +273,7 @@ export const RECIPES: Recipe[] = [
     image_url: "/images/ICE_쿠키초코라떼.jpg",
   },
   {
-    category: "논커피",
+    category: "한 잔 레시피",
     name: "쿠키초코라떼	ICE (한 잔 분량)",
     recipe:
       "스팀피쳐 / 쿠키앤크림파우더 40g + 설탕시럽 3펌프 + 쿠키크럼 10g + 우유 50g / 섞기 / 데우기 / 우유 200 + 얼음 / 휘핑 + 초코소스 + 쿠키크럼 토핑",
@@ -688,5 +690,106 @@ export const RECIPES: Recipe[] = [
     name: "아아~ 초코볼~",
     recipe: "아이스 아메리카노 + 초코볼",
     image_url: "/images/아아~ 초코볼~.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "리얼 믹스 커피",
+    recipe: "블렌더볼 / 커피 베이스 200g + 바닐라 시럽 2펌프 + 얼음 60g / 믹스 2번 / 얼음 170g",
+    image_url: "images/빅포즈_제로_바나나__리얼_믹스_커피.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "제로 리얼 믹스 커피",
+    recipe: "블렌더볼 / 제로 커피 베이스 200g + 바닐라 시럽 2펌프 + 얼음 60g / 믹스 2번 / 얼음 170g",
+    image_url: "images/빅포즈_제로_리얼_믹스_커피.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "빅포즈 리얼 믹스 커피",
+    recipe: "블렌더볼 / 커피 베이스 300g + 바닐라 시럽 3펌프 + 얼음 90g / 믹스 2번 / 얼음 250g",
+    image_url: "images/빅포즈_리얼_믹스_커피.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "빅포즈 제로 리얼 믹스 커피",
+    recipe: "블렌더볼 / 제로 커피 베이스 300g + 바닐라 시럽 3펌프 + 얼음 90g / 믹스 2번 / 얼음 250g",
+    image_url: "images/빅포즈_제로_리얼_믹스_커피.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "바나나 리얼 믹스 커피",
+    recipe:
+      "블렌더볼 / 커피 베이스 200g + 바닐라 시럽 2펌프 + 바나나 라떼 파우더 30g + 얼음 60g / 믹스 2번 / 얼음 170g",
+    image_url: "images/빅포즈_제로_바나나__리얼_믹스_커피.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "제로 바나나 리얼 믹스 커피",
+    recipe:
+      "블렌더볼 / 제로 커피 베이스 200g + 바닐라 시럽 2펌프 + 저당 바나나 라떼 파우더 30g + 얼음 60g / 믹스 2번 / 얼음 170g",
+    image_url: "images/빅포즈_제로_바나나__리얼_믹스_커피.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "빅포즈 바나나 리얼 믹스 커피",
+    recipe:
+      "블렌더볼 / 커피 베이스 300g + 바닐라 시럽 3펌프 + 바나나 라떼 파우더 45g + 얼음 90g / 믹스 2번 / 얼음 250g",
+    image_url: "images/빅포즈_바나나_리얼_믹스_커피.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "빅포즈 제로 바나나 리얼 믹스 커피",
+    recipe:
+      "블렌더볼 / 제로 커피 베이스 300g + 바닐라 시럽 3펌프 + 저당 바나나 라떼 파우더 45g + 얼음 90g / 믹스 2번 / 얼음 250g",
+    image_url: "images/빅포즈_제로_바나나__리얼_믹스_커피.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "오렌지 사샷추",
+    recipe: "아이스컵 / 오렌지 베이스 50g + 얼음 200g + 사이다 250g / 믹스 / 에스프레소 2샷",
+    image_url: "images/빅포즈_오렌지_사샷추_디카페인.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "레몬 사샷추",
+    recipe: "아이스컵 / 레몬 베이스 50g + 얼음 200g + 사이다 250g / 믹스 / 에스프레소 2샷",
+    image_url: "images/빅포즈_레몬_사샷추_디카페인.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "빅포즈 오렌지 사샷추",
+    recipe: "아이스컵 / 오렌지 베이스 75g + 얼음 370g + 사이다 380g / 믹스 / 에스프레소 4샷",
+    image_url: "images/빅포즈_오렌지_사샷추_디카페인.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "빅포즈 레몬 사샷추",
+    recipe: "아이스컵 / 레몬 베이스 75g + 얼음 370g + 사이다 380g / 믹스 / 에스프레소 4샷",
+    image_url: "images/빅포즈_레몬_사샷추_디카페인.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "오렌지 사샷추 콜드브루",
+    recipe: "아이스컵 / 오렌지 베이스 50g + 얼음 200g + 사이다 250g / 믹스 / 콜드브루 1팩",
+    image_url: "images/오렌지_사샷추_콜드브루.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "레몬 사샷추 콜드브루",
+    recipe: "아이스컵 / 레몬 베이스 50g + 얼음 200g + 사이다 250g / 믹스 / 콜드브루 1팩",
+    image_url: "images/레몬_사샷추_콜드브루.jpg",
+  },
+  {
+    category: "밀크쉐이크",
+    name: "딸기 모찌 밀크쉐이크",
+    recipe:
+      "블렌더볼 / 밀크쉐이크 베이스 150g + 밀크쉐이크 파우더 40g / 설탕시럽 2펌프 + 딸기베이스 90g + 얼음 280g / 믹스 3번 / 휘핑크림 30g + 찹쌀떡 4개",
+    image_url: "images/딸기_모찌_밀크쉐이크.jpg",
+  },
+  {
+    category: "신메뉴",
+    name: "국내산 딸기주스",
+    recipe: "블렌더볼 / 갈아만든 딸기 1팩 + 정수 180g / 믹스 2번 / 아이스컵 옮긴 후 얼음 가득",
+    image_url: "images/딸기주스.jpg",
   },
 ];

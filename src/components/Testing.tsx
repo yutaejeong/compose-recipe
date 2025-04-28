@@ -7,6 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import Confetti from "react-confetti";
 import { Recipe } from "../constants/recipe";
 
 interface Props {
@@ -20,6 +21,8 @@ export default function Testing({ quizes, onFinish }: Props) {
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<string>("");
+  const [showConfetti, setShowConfetti] = useState<boolean>(false);
+  const [showShine, setShowShine] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
@@ -28,6 +31,7 @@ export default function Testing({ quizes, onFinish }: Props) {
   const totalElapsedTime = useRef<number>(0);
   const timerRef = useRef<ReturnType<typeof setInterval>>(null);
 
+  const isCorrect = useMemo(() => result.includes("정답"), [result]);
   const menuImage = useMemo(() => selectMenuImage(quizes[progress - 1].image_url), [progress]);
 
   useEffect(() => {
@@ -41,6 +45,25 @@ export default function Testing({ quizes, onFinish }: Props) {
       inputRef.current?.focus();
     }
   }, [showRecipe]);
+
+  useEffect(() => {
+    if (showRecipe && isCorrect) {
+      setShowConfetti(true);
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 5000);
+    }
+  }, [showRecipe, isCorrect]);
+
+  useEffect(() => {
+    if (showRecipe && isCorrect) {
+      setShowShine(true);
+      const timer = setTimeout(() => {
+        setShowShine(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [showRecipe, isCorrect]);
 
   function restartTimer() {
     elapsedTime.current = 0;
@@ -82,6 +105,7 @@ export default function Testing({ quizes, onFinish }: Props) {
     } else {
       setProgress((prev) => prev + 1);
       setShowRecipe(false);
+      setResult("");
       restartTimer();
       if (inputRef.current) {
         inputRef.current.value = "";
@@ -91,13 +115,58 @@ export default function Testing({ quizes, onFinish }: Props) {
 
   return (
     <div className="w-full flex flex-col justify-center items-center gap-4">
+      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
       <div className="w-[50%] flex items-center gap-2">
         <LinearProgress variant="determinate" value={(progress / quizes.length) * 100} sx={{ flex: 1 }} />
         <Typography variant="body2">
           {progress} / {quizes.length}
         </Typography>
       </div>
-      <Card sx={{ width: "100%", maxWidth: "1000px" }}>
+      <Card
+        sx={{
+          width: "100%",
+          maxWidth: "1000px",
+          position: "relative",
+          overflow: "hidden",
+          animation: showRecipe && !isCorrect ? "shake 0.5s, redFlash 0.5s" : "none",
+          "@keyframes shake": {
+            "0%, 100%": { transform: "translateX(0)" },
+            "10%, 30%, 50%, 70%, 90%": { transform: "translateX(-5px)" },
+            "20%, 40%, 60%, 80%": { transform: "translateX(5px)" },
+          },
+          "@keyframes redFlash": {
+            "0%, 100%": { backgroundColor: "white" },
+            "50%": { backgroundColor: "#ffebee" },
+          },
+        }}
+      >
+        {showShine && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "200%",
+              height: "200%",
+              background: "linear-gradient(45deg, transparent 0%, rgba(76, 175, 80, 0.2) 50%, transparent 100%)",
+              animation: "shine 1s ease-in-out",
+              transform: "translate(-50%, -50%) rotate(45deg)",
+              zIndex: 1,
+            }}
+          />
+        )}
+        <style>
+          {`
+            @keyframes shine {
+              0% {
+                transform: translate(-100%, -100%) rotate(45deg);
+              }
+              100% {
+                transform: translate(50%, 50%) rotate(45deg);
+              }
+            }
+          `}
+        </style>
         <CardMedia
           sx={{ backgroundSize: "contain", height: "300px" }}
           image={menuImage}
@@ -127,7 +196,7 @@ export default function Testing({ quizes, onFinish }: Props) {
                 </Typography>
                 <Typography
                   variant="body1"
-                  sx={{ fontWeight: "600", color: result.includes("정답") ? "#399" : "#933" }}
+                  sx={{ fontWeight: "600", color: isCorrect ? "#399" : "#933" }}
                   dangerouslySetInnerHTML={{ __html: result }}
                 />
               </div>

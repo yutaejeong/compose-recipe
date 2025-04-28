@@ -13,6 +13,7 @@ export const CATEGORIES = [
   "콤보",
   "신메뉴",
   "한 잔 레시피",
+  "시즌메뉴",
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];
@@ -242,7 +243,7 @@ export const RECIPES: Recipe[] = [
     image_url: "/images/ICE_더블초코라떼.jpg",
   },
   {
-    category: "논커피",
+    category: "한 잔 레시피",
     name: "더블초코라떼	ICE (한 잔 분량)",
     recipe:
       "스팀피쳐 / 초코소스 20g + 바리스타카카오 5g + 설탕시럽 2.5펌프 + 더블초코파우더 10g + 우유 50g / 섞기 / 데우기 / 우유 200 + 얼음 / 휘핑 + 초코소스 + 초콜릿청크 토핑",
@@ -311,7 +312,7 @@ export const RECIPES: Recipe[] = [
     image_url: "/images/ICE_밀크티.jpg",
   },
   {
-    category: "논커피",
+    category: "한 잔 레시피",
     name: "밀크티	ICE (한 잔 분량)",
     recipe:
       "계량컵 / 얼그레이티백 1개 + 뜨거운 물 50 / 3분 우리기 / 밀크티파우더 20g + 바닐라시럽 1펌프 / 우린 티 넣고 섞기 / 우유 200 / 얼음",
@@ -586,25 +587,25 @@ export const RECIPES: Recipe[] = [
   {
     category: "과일주스",
     name: "키위주스	ICE",
-    recipe: "블렌더볼 / 갈아만든그린키위 1팩 + 미온수 160g / 믹스 2번 / 얼음(2/3)",
+    recipe: "블렌더볼 / 갈아만든그린키위 1팩 + 정수 160g / 믹스 2번 / 얼음(2/3)",
     image_url: "/images/키위주스.jpg",
   },
   {
     category: "과일주스",
     name: "복숭아주스	ICE",
-    recipe: "블렌더볼 / 갈아만든복숭아 1팩 + 미온수 160g / 믹스 2번 / 얼음(2/3)",
+    recipe: "블렌더볼 / 갈아만든복숭아 1팩 + 정수 160g / 믹스 2번 / 얼음(2/3)",
     image_url: "/images/복숭아주스.jpg",
   },
   {
     category: "과일주스",
     name: "오렌지당근주스	ICE",
-    recipe: "블렌더볼 / 갈아만든오렌지당근 1팩 + 미온수 160g / 믹스 2번 / 얼음(2/3)",
+    recipe: "블렌더볼 / 갈아만든오렌지당근 1팩 + 정수 160g / 믹스 2번 / 얼음(2/3)",
     image_url: "/images/오렌지당근주스.jpg",
   },
   {
     category: "과일주스",
     name: "샤인머스캣케일주스	ICE",
-    recipe: "블렌더볼 / 갈아만든샤인파인케일 1팩 + 미온수 160g / 믹스 2번 / 얼음(2/3)",
+    recipe: "블렌더볼 / 갈아만든샤인파인케일 1팩 + 정수 160g / 믹스 2번 / 얼음(2/3)",
     image_url: "/images/샤인머스캣케일주스.jpg",
   },
   {
@@ -796,11 +797,30 @@ export const RECIPES: Recipe[] = [
       "스팀피쳐 / 초코소스 20 + 바리스타카카오 5g + 설탕시럽 2.5펌프 + 더블초코파우더 10g + 우유 50g / 믹스 / 데우기 / 우유 200 / 얼음 / 휘핑 + 초코소스 + 초콜릿청크 토핑",
     image_url: "/images/ICE_더블초코라떼.jpg",
   },
-
   {
-    category: "커피",
+    category: "한 잔 레시피",
     name: "돌체라떼	ICE (한 잔 분량)",
     recipe: "아이스컵 / 연유 40 + 우유 200선 / 섞기 / 얼음 / 에스프레소 2샷",
     image_url: "/images/ICE_돌체라떼.jpg",
+  },
+  {
+    category: "시즌메뉴",
+    name: "하와이안에이드",
+    recipe:
+      "스팀피처(①) / 파인애플 베이스 30g + 사이다 200g 담은 후 바스푼으로 믹스 / 아이스컵(②) / 캔디소다베이스 10g + 얼음 가득(280g) 담기 / ②번 아이스컵에 ①번 옮겨 담은 후 바스푼으로 믹스 / 아이스컵에 후르츠 칵테일 고형물 1스푼(30g) 담기",
+    image_url: "/images/하와이안에이드.jpg",
+  },
+  {
+    category: "시즌메뉴",
+    name: "파인선셋스무디",
+    recipe:
+      "블렌더볼 / 파인애플베이스 100g + 정수 30g + 연요플레인 1개 + 얼음 300g / 믹스 3번 / 베리레몬그라스베이스 50g / 건조레몬슬라이스 1/2개 토핑",
+    image_url: "/images/파인선셋스무디.jpg",
+  },
+  {
+    category: "시즌메뉴",
+    name: "논산에서 온 수박주스",
+    recipe: "블렌더볼 / 갈아만든논산수박 1팩 + 정수 200g + 설탕시럽 1펌프 / 믹스 2번 / 얼음",
+    image_url: "/images/논산에서_온_수박주스.jpg",
   },
 ];

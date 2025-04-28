@@ -1,6 +1,15 @@
-import { generateRecipe } from "@/api/gemini";
+import { generateRecipe, commentOnResult } from "@/api/gemini";
 import { selectMenuImage } from "@/utils";
-import { Button, CardMedia, CircularProgress, LinearProgress } from "@mui/material";
+import {
+  Button,
+  CardMedia,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  LinearProgress,
+} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -15,6 +24,14 @@ interface Props {
   onFinish: () => void;
 }
 
+interface QuizResult {
+  recipe: string;
+  userAnswer: string;
+  result: string;
+  imageUrl: string | string[];
+  name: string;
+}
+
 export default function Testing({ quizes, onFinish }: Props) {
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(1);
@@ -23,6 +40,9 @@ export default function Testing({ quizes, onFinish }: Props) {
   const [result, setResult] = useState<string>("");
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const [showShine, setShowShine] = useState(false);
+  const [showResultDialog, setShowResultDialog] = useState(false);
+  const [quizResults, setQuizResults] = useState<QuizResult[]>([]);
+  const [comment, setComment] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
@@ -89,8 +109,21 @@ export default function Testing({ quizes, onFinish }: Props) {
     }
     setLoading(true);
     try {
-      const result = await generateRecipe(quizes[progress - 1].recipe, inputRef.current?.value || "");
-      setResult(result || "채점 결과를 불러오지 못했습니다.");
+      const userAnswer = inputRef.current?.value || "";
+      const result = await generateRecipe(quizes[progress - 1].recipe, userAnswer);
+      const finalResult = result || "채점 결과를 불러오지 못했습니다.";
+      setResult(finalResult);
+
+      setQuizResults((prev) => [
+        ...prev,
+        {
+          recipe: quizes[progress - 1].recipe,
+          userAnswer,
+          result: finalResult,
+          imageUrl: quizes[progress - 1].image_url,
+          name: quizes[progress - 1].name,
+        },
+      ]);
     } catch {
       setResult("채점 결과를 불러오지 못했습니다. (오류)");
     } finally {
@@ -99,12 +132,16 @@ export default function Testing({ quizes, onFinish }: Props) {
     }
   }
 
-  function handleNextQuiz() {
+  async function handleNextQuiz() {
     if (progress === quizes.length) {
       setIsFinished(true);
+      const comment = await commentOnResult(quizResults.map((result) => result.result));
+      setComment(comment || "good job!");
     } else {
       setProgress((prev) => prev + 1);
       setShowRecipe(false);
+      setShowConfetti(false);
+      setShowShine(false);
       setResult("");
       restartTimer();
       if (inputRef.current) {
@@ -113,9 +150,20 @@ export default function Testing({ quizes, onFinish }: Props) {
     }
   }
 
+  const correctCount = useMemo(
+    () => quizResults.filter((result) => result.result.includes("정답")).length,
+    [quizResults],
+  );
+
+  const progressColor = useMemo(() => {
+    const ratio = correctCount / quizes.length;
+    const hue = ratio * 120; // 0: 빨강, 120: 초록
+    return `hsl(${hue}, 70%, 50%)`;
+  }, [correctCount, quizes.length]);
+
   return (
     <div className="w-full flex flex-col justify-center items-center gap-4">
-      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
+      {showConfetti && <Confetti className="w-dvw h-dvh" />}
       <div className="w-[50%] flex items-center gap-2">
         <LinearProgress variant="determinate" value={(progress / quizes.length) * 100} sx={{ flex: 1 }} />
         <Typography variant="body2">
@@ -224,13 +272,67 @@ export default function Testing({ quizes, onFinish }: Props) {
                 문제당 평균 소요 시간:&nbsp;
                 <b>{(totalElapsedTime.current / quizes.length).toFixed(2)} 초</b>
               </Typography>
-              <Button variant="text" onClick={() => onFinish()}>
-                종료
-              </Button>
+              <div className="w-full flex justify-center gap-2 mt-2">
+                <Button variant="contained" onClick={() => setShowResultDialog(true)}>
+                  자세한 채점 결과 보기
+                </Button>
+                <Button variant="contained" onClick={() => onFinish()}>
+                  종료
+                </Button>
+              </div>
             </div>
           </CardContent>
         )}
       </Card>
+
+      <Dialog
+        open={showResultDialog}
+        onClose={() => setShowResultDialog(false)}
+        maxWidth="md"
+        fullWidth
+        sx={{ display: "flex", flexDirection: "column" }}
+      >
+        <DialogTitle className="flex justify-center items-center flex-col gap-2">
+          <Typography variant="h4" fontWeight="bold" sx={{ color: progressColor }}>
+            {Math.round((correctCount / quizes.length) * 100)}점
+          </Typography>
+          <Typography variant="body1" fontWeight="bold" sx={{ color: progressColor }}>
+            {comment}
+          </Typography>
+        </DialogTitle>
+        <DialogContent className="flex flex-col">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-full overflow-y-auto">
+              {quizResults.map(
+                (quiz, index) =>
+                  !quiz.result.includes("정답") && (
+                    <div key={index} className="flex gap-4 mb-4 p-4 border rounded">
+                      <div className="w-32 h-32">
+                        <CardMedia
+                          component="img"
+                          image={selectMenuImage(quiz.imageUrl)}
+                          alt={quiz.name}
+                          className="w-full h-full object-contain rounded-xs"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <Typography variant="h6">{quiz.name}</Typography>
+                        <Typography variant="body2" color="error">
+                          {quiz.result}
+                        </Typography>
+                      </div>
+                    </div>
+                  ),
+              )}
+            </div>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={() => setShowResultDialog(false)}>
+            닫기
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

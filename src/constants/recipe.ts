@@ -35,7 +35,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "커피",
     name: "아메리카노	HOT",
-    recipe: "종이컵 / 뜨거운 물 350g / 에스프레소 2샷",
+    recipe: "종이컵 / 온수 350g / 에스프레소 2샷",
     image_url: "/images/HOT_아메리카노.jpg",
   },
   {
@@ -122,7 +122,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "커피",
     name: "돌체라떼	HOT",
-    recipe: "종이컵 / 연유 50g + 스팀우유 250g / 섞기 / 베리에이션 2샷",
+    recipe: "종이컵 / 연유 50g + 베리에이션 2샷 / 섞기 / 스팀우유 250g",
     image_url: "/images/HOT_돌체라떼.jpg",
   },
   {
@@ -154,7 +154,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "커피",
     name: "더치커피	HOT",
-    recipe: "종이컵 / 콜드브루파우치 + 뜨거운 물 260g",
+    recipe: "스팀피쳐 / 콜드브루파우치 + 온수 260g",
     image_url: "/images/HOT_더치커피.jpg",
   },
   {
@@ -185,7 +185,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "커피",
     name: "디카페인더치	HOT",
-    recipe: "종이컵 / 디카페인파우치 + 뜨거운물 260g",
+    recipe: "스팀피쳐 / 디카페인파우치 + 온수 260g",
     image_url: "/images/HOT_디카페인_더치커피.jpg",
   },
   {
@@ -315,7 +315,7 @@ export const RECIPES: Recipe[] = [
     category: "한 잔 레시피",
     name: "밀크티	ICE (한 잔 분량)",
     recipe:
-      "계량컵 / 얼그레이티백 1개 + 뜨거운 물 50 / 3분 우리기 / 밀크티파우더 20g + 바닐라시럽 1펌프 / 우린 티 넣고 섞기 / 우유 200 / 얼음",
+      "계량컵 / 얼그레이티백 1개 + 온수 50 / 3분 우리기 / 밀크티파우더 20g + 바닐라시럽 1펌프 / 우린 티 넣고 섞기 / 우유 200 / 얼음",
     image_url: "/images/ICE_밀크티.jpg",
   },
   {
@@ -497,7 +497,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "차",
     name: "페퍼민트, 캐모마일, 로즈마리, 얼그레이, 블랙퍼스트 HOT",
-    recipe: "종이컵 / 티백 한 개 + 뜨거운 물 350g",
+    recipe: "종이컵 / 티백 한 개 + 온수 350g",
     image_url: [
       "/images/HOT_페퍼민트.jpg",
       "/images/HOT_캐모마일.jpg",
@@ -509,7 +509,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "차",
     name: "페퍼민트, 캐모마일, 로즈마리, 얼그레이, 블랙퍼스트 ICE",
-    recipe: "계량컵 / 티백 한 개 + 뜨거운 물 200g / 2분 우리기 / 얼음",
+    recipe: "계량컵 / 티백 한 개 + 온수 200g / 2분 우리기 / 얼음",
     image_url: [
       "/images/ICE_페퍼민트.jpg",
       "/images/ICE_캐모마일.jpg",
@@ -521,7 +521,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "차",
     name: "복숭아티	HOT",
-    recipe: "종이컵 / 뜨거운물 350g + 아이스티파우더 50g / 레몬슬라이스 1개 토핑",
+    recipe: "종이컵 / 온수 350g + 아이스티파우더 50g / 레몬슬라이스 1개 토핑",
     image_url: "/images/HOT_아이스티.jpg",
   },
   {
@@ -533,8 +533,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "차",
     name: "자몽티	HOT",
-    recipe:
-      "종이컵 / 자몽청 80g + 자몽에이드 30g + 레몬후르츠 1펌프 + 뜨거운 물 260g 이상 / 섞기 / 자몽슬라이스 1개 토핑",
+    recipe: "종이컵 / 자몽청 80g + 자몽에이드 30g + 레몬후르츠 1펌프 + 온수 260g 이상 / 섞기 / 자몽슬라이스 1개 토핑",
     image_url: "/images/HOT_자몽티.jpg",
   },
   {
@@ -547,8 +546,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "차",
     name: "레몬티	HOT",
-    recipe:
-      "종이컵 / 레몬청 80g + 레몬에이드 30g + 레몬후르츠 1펌프 + 뜨거운 물 260g 이상 / 섞기 / 레몬슬라이스 1개 토핑",
+    recipe: "종이컵 / 레몬청 80g + 레몬에이드 30g + 레몬후르츠 1펌프 + 온수 260g 이상 / 섞기 / 레몬슬라이스 1개 토핑",
     image_url: "/images/HOT_레몬티.jpg",
   },
   {
@@ -561,7 +559,7 @@ export const RECIPES: Recipe[] = [
   {
     category: "차",
     name: "유자티	HOT",
-    recipe: "종이컵 / 유자청 100g + 레몬후르츠 1펌프 + 뜨거운 물 260g 이상 / 섞기",
+    recipe: "종이컵 / 유자청 100g + 레몬후르츠 1펌프 + 온수 260g 이상 / 섞기",
     image_url: "/images/HOT_유자티.jpg",
   },
   {
@@ -574,14 +572,14 @@ export const RECIPES: Recipe[] = [
     category: "차",
     name: "자몽허니블랙티	HOT",
     recipe:
-      "스팀피쳐 / 자몽허니베이스 90g + 설탕시럽 1펌프 + 뜨거운 물 300g / 스팀 / 종이컵에 블랙페스트 티백 1개 넣고 붇기",
+      "스팀피쳐 / 자몽허니베이스 90g + 설탕시럽 1펌프 + 온수 300g / 스팀 / 종이컵에 블랙페스트 티백 1개 넣고 붇기",
     image_url: "/images/HOT_자몽허니블랙티.jpg",
   },
   {
     category: "차",
     name: "자몽허니블랙티	ICE",
     recipe:
-      "계량컵 / 블랙퍼스트티백 1개 + 뜨거운 물 150g / 2분 우리기 / 컵에 자몽허니 베이스 90g + 우린 티 붇고 / 티백 넣고 얼음 채우기",
+      "계량컵 / 블랙퍼스트티백 1개 + 온수 150g / 2분 우리기 / 컵에 자몽허니 베이스 90g + 우린 티 붇고 / 티백 넣고 얼음 채우기",
     image_url: "/images/ICE_자몽허니블랙티.jpg",
   },
   {
@@ -807,14 +805,14 @@ export const RECIPES: Recipe[] = [
     category: "시즌메뉴",
     name: "하와이안에이드",
     recipe:
-      "스팀피처(①) / 파인애플 베이스 30g + 사이다 200g 담은 후 바스푼으로 믹스 / 아이스컵(②) / 캔디소다베이스 10g + 얼음 가득(280g) 담기 / ②번 아이스컵에 ①번 옮겨 담은 후 바스푼으로 믹스 / 아이스컵에 후르츠 칵테일 고형물 1스푼(30g) 담기",
+      "스팀피처(①) / 파인애플베이스 30g + 사이다 200g / 믹스 / 아이스컵(②) / 캔디소다베이스 10g + 얼음 가득 / ②번 아이스컵에 ①번 옮겨 담기 / 섞기 / 후르츠칵테일고형물 30g 담기",
     image_url: "/images/하와이안에이드.jpg",
   },
   {
     category: "시즌메뉴",
     name: "파인선셋스무디",
     recipe:
-      "블렌더볼 / 파인애플베이스 100g + 정수 30g + 연요플레인 1개 + 얼음 300g / 믹스 3번 / 베리레몬그라스베이스 50g / 건조레몬슬라이스 1/2개 토핑",
+      "블렌더볼 / 파인애플베이스 100g + 정수 30g + 엔요플레인 1개 + 얼음 300g / 믹스 3번 / 베리레몬그라스베이스 50g / 건조레몬슬라이스 1/2개 토핑",
     image_url: "/images/파인선셋스무디.jpg",
   },
   {

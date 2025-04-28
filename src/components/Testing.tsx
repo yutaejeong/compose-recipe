@@ -1,5 +1,6 @@
+import { generateRecipe } from "@/api/gemini";
 import { selectMenuImage } from "@/utils";
-import { Button, CardMedia, LinearProgress } from "@mui/material";
+import { Button, CardMedia, CircularProgress, LinearProgress } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -17,6 +18,8 @@ export default function Testing({ quizes, onFinish }: Props) {
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(1);
   const [isFinished, setIsFinished] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [result, setResult] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
@@ -57,10 +60,19 @@ export default function Testing({ quizes, onFinish }: Props) {
     e.preventDefault();
   }
 
-  function handleShowRecipe() {
-    setShowRecipe(true);
+  async function handleGradeRecipe() {
     if (timerRef.current) {
       clearInterval(timerRef.current);
+    }
+    setLoading(true);
+    try {
+      const result = await generateRecipe(quizes[progress - 1].recipe, inputRef.current?.value || "");
+      setResult(result || "채점 결과를 불러오지 못했습니다.");
+    } catch {
+      setResult("채점 결과를 불러오지 못했습니다. (오류)");
+    } finally {
+      setLoading(false);
+      setShowRecipe(true);
     }
   }
 
@@ -113,14 +125,19 @@ export default function Testing({ quizes, onFinish }: Props) {
                 <Typography variant="body1" sx={{ fontWeight: "600", color: "#444" }}>
                   {quizes[progress - 1].recipe}
                 </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "600", color: result.includes("정답") ? "#399" : "#933" }}
+                  dangerouslySetInnerHTML={{ __html: result }}
+                />
               </div>
             )}
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={handleShowRecipe} type="submit" disabled={showRecipe}>
-              레시피 확인
+            <Button size="small" onClick={handleGradeRecipe} type="submit" disabled={showRecipe || loading}>
+              {loading ? <CircularProgress size={20} color="inherit" /> : "채점"}
             </Button>
-            <Button size="small" onClick={handleNextQuiz} ref={nextButtonRef} disabled={isFinished}>
+            <Button size="small" onClick={handleNextQuiz} ref={nextButtonRef} disabled={isFinished || loading}>
               다음 메뉴
             </Button>
           </CardActions>

@@ -69,9 +69,6 @@ export default function Testing({ quizes, onFinish }: Props) {
   useEffect(() => {
     if (showRecipe && isCorrect) {
       setShowConfetti(true);
-      setTimeout(() => {
-        setShowConfetti(false);
-      }, 5000);
     }
   }, [showRecipe, isCorrect]);
 
@@ -163,7 +160,7 @@ export default function Testing({ quizes, onFinish }: Props) {
 
   return (
     <div className="w-full flex flex-col justify-center items-center gap-4">
-      {showConfetti && <Confetti className="w-dvw h-dvh" />}
+      {showConfetti && <Confetti className="w-dvw h-dvh" recycle={false} />}
       <div className="w-[50%] flex items-center gap-2">
         <LinearProgress variant="determinate" value={(progress / quizes.length) * 100} sx={{ flex: 1 }} />
         <Typography variant="body2">
@@ -293,12 +290,19 @@ export default function Testing({ quizes, onFinish }: Props) {
         sx={{ display: "flex", flexDirection: "column" }}
       >
         <DialogTitle className="flex justify-center items-center flex-col gap-2">
-          <Typography variant="h4" fontWeight="bold" sx={{ color: progressColor }}>
-            {Math.round((correctCount / quizes.length) * 100)}점
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            className="px-4 py-2 rounded-md text-gray-50"
+            sx={{ backgroundColor: progressColor }}
+          >
+            {correctCount} / {quizes.length}
           </Typography>
-          <Typography variant="body1" fontWeight="bold" sx={{ color: progressColor }}>
-            {comment}
-          </Typography>
+          <div className="w-full flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 bg-gray-50 ">
+            <Typography variant="body1" fontWeight="bold" sx={{ color: "#444" }}>
+              {comment}
+            </Typography>
+          </div>
         </DialogTitle>
         <DialogContent className="flex flex-col">
           <div className="flex flex-col items-center gap-4">
@@ -315,8 +319,22 @@ export default function Testing({ quizes, onFinish }: Props) {
                           className="w-full h-full object-contain rounded-xs"
                         />
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 flex flex-col gap-2">
                         <Typography variant="h6">{quiz.name}</Typography>
+                        <div className="pt-3 pb-2 px-2 border rounded-md bg-gray-50 relative mb-1">
+                          <span className="absolute left-4 -top-2 text-xs font-bold bg-white rounded-full text-gray-700">
+                            정답 레시피
+                          </span>
+                          <Typography variant="body2">{quiz.recipe}</Typography>
+                        </div>
+                        <div className="pt-3 pb-2 px-2 border rounded-md bg-gray-50 relative">
+                          <span className="absolute left-4 -top-2 text-xs font-bold bg-white rounded-full text-gray-700">
+                            입력
+                          </span>
+                          <Typography variant="body2" color="warning">
+                            {quiz.userAnswer}
+                          </Typography>
+                        </div>
                         <Typography variant="body2" color="error">
                           {quiz.result}
                         </Typography>

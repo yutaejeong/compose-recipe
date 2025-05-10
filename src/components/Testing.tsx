@@ -1,4 +1,4 @@
-import { generateRecipe, commentOnResult } from "@/api/gemini";
+import { commentOnResult, generateRecipe } from "@/api/gemini";
 import { selectMenuImage } from "@/utils";
 import {
   Button,
@@ -20,7 +20,7 @@ import Confetti from "react-confetti";
 import { Recipe } from "../constants/recipe";
 
 interface Props {
-  quizes: Recipe[];
+  quizzes: Recipe[];
   onFinish: () => void;
 }
 
@@ -32,7 +32,7 @@ interface QuizResult {
   name: string;
 }
 
-export default function Testing({ quizes, onFinish }: Props) {
+export default function Testing({ quizzes, onFinish }: Props) {
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(1);
   const [isFinished, setIsFinished] = useState<boolean>(false);
@@ -52,7 +52,7 @@ export default function Testing({ quizes, onFinish }: Props) {
   const timerRef = useRef<ReturnType<typeof setInterval>>(null);
 
   const isCorrect = useMemo(() => result.includes("정답"), [result]);
-  const menuImage = useMemo(() => selectMenuImage(quizes[progress - 1].image_url), [progress]);
+  const menuImage = useMemo(() => selectMenuImage(quizzes[progress - 1].image_url), [progress]);
 
   useEffect(() => {
     restartTimer();
@@ -107,18 +107,18 @@ export default function Testing({ quizes, onFinish }: Props) {
     setLoading(true);
     try {
       const userAnswer = inputRef.current?.value || "";
-      const result = await generateRecipe(quizes[progress - 1].recipe, userAnswer);
-      const finalResult = result || "채점 결과를 불러오지 못했습니다.";
+      const result = await generateRecipe(quizzes[progress - 1].recipe, userAnswer);
+      const finalResult = result.isCorrect ? "정답" : result.feedback || "채점 결과를 불러오지 못했습니다.";
       setResult(finalResult);
 
       setQuizResults((prev) => [
         ...prev,
         {
-          recipe: quizes[progress - 1].recipe,
+          recipe: quizzes[progress - 1].recipe,
           userAnswer,
           result: finalResult,
-          imageUrl: quizes[progress - 1].image_url,
-          name: quizes[progress - 1].name,
+          imageUrl: quizzes[progress - 1].image_url,
+          name: quizzes[progress - 1].name,
         },
       ]);
     } catch {
@@ -130,7 +130,7 @@ export default function Testing({ quizes, onFinish }: Props) {
   }
 
   async function handleNextQuiz() {
-    if (progress === quizes.length) {
+    if (progress === quizzes.length) {
       setIsFinished(true);
       const comment = await commentOnResult(quizResults.map((result) => result.result));
       setComment(comment || "good job!");
@@ -147,24 +147,21 @@ export default function Testing({ quizes, onFinish }: Props) {
     }
   }
 
-  const correctCount = useMemo(
-    () => quizResults.filter((result) => result.result.includes("정답")).length,
-    [quizResults],
-  );
+  const correctCount = useMemo(() => quizResults.filter((result) => result.result.length === 0).length, [quizResults]);
 
   const progressColor = useMemo(() => {
-    const ratio = correctCount / quizes.length;
+    const ratio = correctCount / quizzes.length;
     const hue = ratio * 120; // 0: 빨강, 120: 초록
     return `hsl(${hue}, 70%, 50%)`;
-  }, [correctCount, quizes.length]);
+  }, [correctCount, quizzes.length]);
 
   return (
     <div className="w-full flex flex-col justify-center items-center gap-4">
       {showConfetti && <Confetti className="w-dvw h-dvh" recycle={false} />}
       <div className="w-[50%] flex items-center gap-2">
-        <LinearProgress variant="determinate" value={(progress / quizes.length) * 100} sx={{ flex: 1 }} />
+        <LinearProgress variant="determinate" value={(progress / quizzes.length) * 100} sx={{ flex: 1 }} />
         <Typography variant="body2">
-          {progress} / {quizes.length}
+          {progress} / {quizzes.length}
         </Typography>
       </div>
       <Card
@@ -215,13 +212,13 @@ export default function Testing({ quizes, onFinish }: Props) {
         <CardMedia
           sx={{ backgroundSize: "contain", height: "300px" }}
           image={menuImage}
-          title={quizes[progress - 1].name}
+          title={quizzes[progress - 1].name}
         />
         <form className="w-full" onSubmitCapture={(e) => handleSubmit(e)}>
           <CardContent>
             <div className="mb-3">
               <Typography variant="h5" component="span">
-                {quizes[progress - 1].name}
+                {quizzes[progress - 1].name}
               </Typography>
               <Typography variant="h6" component="span" sx={{ ml: 1 }} ref={timerLabelRef} />
             </div>
@@ -237,7 +234,7 @@ export default function Testing({ quizes, onFinish }: Props) {
             {showRecipe && (
               <div className="mt-2 py-2 px-3.5 border rounded bg-gray-50">
                 <Typography variant="body1" sx={{ fontWeight: "600", color: "#444" }}>
-                  {quizes[progress - 1].recipe}
+                  {quizzes[progress - 1].recipe}
                 </Typography>
                 <Typography
                   variant="body1"
@@ -267,7 +264,7 @@ export default function Testing({ quizes, onFinish }: Props) {
               </Typography>
               <Typography>
                 문제당 평균 소요 시간:&nbsp;
-                <b>{(totalElapsedTime.current / quizes.length).toFixed(2)} 초</b>
+                <b>{(totalElapsedTime.current / quizzes.length).toFixed(2)} 초</b>
               </Typography>
               <div className="w-full flex justify-center gap-2 mt-2">
                 <Button variant="contained" onClick={() => setShowResultDialog(true)}>
@@ -296,7 +293,7 @@ export default function Testing({ quizes, onFinish }: Props) {
             className="px-4 py-2 rounded-md text-gray-50"
             sx={{ backgroundColor: progressColor }}
           >
-            {correctCount} / {quizes.length}
+            {correctCount} / {quizzes.length}
           </Typography>
           <div className="w-full flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 bg-gray-50 ">
             <Typography variant="body1" fontWeight="bold" sx={{ color: "#444" }}>

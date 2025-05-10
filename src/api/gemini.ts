@@ -13,9 +13,10 @@ export async function generateRecipe(correct_recipe: string, input_recipe: strin
     contents: GRADE_PROMPT(correct_recipe, input_recipe),
     config: {
       systemInstruction: "당신은 카페 레시피 테스트를 채점하는 평가자입니다.",
+      responseMimeType: "application/json",
     },
   });
-  return response.text;
+  return JSON.parse(response.text || "{}") as { isCorrect: boolean; feedback?: string };
 }
 
 export async function commentOnResult(results: string[]) {

@@ -1,9 +1,9 @@
 import CommercialStatusChart from "@/components/commercial-status/CommercialStatusChart";
+import CurrentPaymentLevel from "@/components/commercial-status/CurrentPaymentLevel";
 import { Button, CircularProgress } from "@mui/material";
 import Link from "next/link";
 import { Suspense } from "react";
 import { getCityData, getCommercialStatus } from "./actions";
-import CurrentPaymentLevel from "@/components/commercial-status/CurrentPaymentLevel";
 
 export const revalidate = 0;
 

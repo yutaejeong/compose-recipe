@@ -54,7 +54,7 @@ export default function Home() {
           )}
         </div>
         {currentStep === "standby" && <StandBy onStart={(testingCategories) => startTest(testingCategories)} />}
-        {currentStep === "testing" && <Testing quizes={quizes} onFinish={() => endTest()} />}
+        {currentStep === "testing" && <Testing quizzes={quizes} onFinish={() => endTest()} />}
       </main>
     </div>
   );

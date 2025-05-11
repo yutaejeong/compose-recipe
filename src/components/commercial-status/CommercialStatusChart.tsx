@@ -100,6 +100,41 @@ export default function CommercialStatusChart({ commercialStatusPromise }: Props
           mode: "index",
           intersect: false,
         },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                const label = context.dataset.label || "";
+                const value = context.parsed.y;
+
+                if (context.datasetIndex === 1) {
+                  // 혼잡도 데이터셋
+                  let congestionText = "";
+                  switch (value) {
+                    case 1:
+                      congestionText = "한산함";
+                      break;
+                    case 2:
+                      congestionText = "보통";
+                      break;
+                    case 3:
+                      congestionText = "바쁨";
+                      break;
+                    case 4:
+                      congestionText = "분주함";
+                      break;
+                    default:
+                      congestionText = value.toString();
+                  }
+                  return `${label}: ${congestionText}`;
+                }
+
+                // 평균 결제금액 데이터셋
+                return `${label}: ${(value / 10000).toFixed(1)}만원`;
+              },
+            },
+          },
+        },
         scales: {
           y: {
             type: "linear",
@@ -163,8 +198,10 @@ export default function CommercialStatusChart({ commercialStatusPromise }: Props
   }
 
   return (
-    <div className="relative w-full" style={{ height: "500px" }}>
-      <canvas ref={chartRef} />
+    <div className="w-full px-1 overflow-x-auto rounded-lg border border-gray-200">
+      <div className="relative w-full h-[500px] min-w-[1000px] overflow-x-auto">
+        <canvas ref={chartRef} />
+      </div>
     </div>
   );
 }

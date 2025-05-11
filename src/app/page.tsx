@@ -4,25 +4,25 @@ import StandBy from "@/components/StandBy";
 import Testing from "@/components/Testing";
 import { Category, Recipe, RECIPES } from "@/constants/recipe";
 import { shuffleArray } from "@/utils";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { useState } from "react";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 type Step = "standby" | "testing" | "finish";
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState<Step>("standby");
-  const [quizes, setQuizes] = useState<Recipe[]>([]);
+  const [quizzes, setQuizzes] = useState<Recipe[]>([]);
 
   function startTest(testingCategories: Category[]) {
     const testingRecipes = RECIPES.filter((recipe) => testingCategories.includes(recipe.category));
-    setQuizes(shuffleArray(testingRecipes));
+    setQuizzes(shuffleArray(testingRecipes));
     setCurrentStep("testing");
   }
 
   function endTest() {
-    setQuizes([]);
+    setQuizzes([]);
     setCurrentStep("standby");
   }
 
@@ -45,6 +45,9 @@ export default function Home() {
               <Link href="/commercial-status">
                 <Button variant="contained">오늘의 혼잡도</Button>
               </Link>
+              <Link href="/e-mart-close">
+                <Button variant="contained">이마트 휴무일</Button>
+              </Link>
               <a href="https://data.seoul.go.kr/SeoulRtd/?hotspotNm=왕십리역" target="_blank">
                 <Button variant="contained">
                   <OpenInNewIcon />
@@ -54,7 +57,7 @@ export default function Home() {
           )}
         </div>
         {currentStep === "standby" && <StandBy onStart={(testingCategories) => startTest(testingCategories)} />}
-        {currentStep === "testing" && <Testing quizzes={quizes} onFinish={() => endTest()} />}
+        {currentStep === "testing" && <Testing quizzes={quizzes} onFinish={() => endTest()} />}
       </main>
     </div>
   );

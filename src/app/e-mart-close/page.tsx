@@ -15,6 +15,8 @@ export default async function EMartClosePage() {
       date.getFullYear() === today.getFullYear(),
   );
 
+  console.log(isTodayClose);
+
   const nextCloseDate = eMartClose.filter((date) => date > today).sort((a, b) => a.getTime() - b.getTime())[0];
 
   const daysUntilNextClose = nextCloseDate

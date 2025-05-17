@@ -2,23 +2,22 @@
 
 import { HourlyData } from "@/app/commercial-status/actions";
 import { Typography } from "@mui/material";
-import { use, useEffect, useRef } from "react";
 import {
-  Chart,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
+  BarController,
   BarElement,
+  CategoryScale,
+  Chart,
+  CoreScaleOptions,
+  Legend,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  Scale,
   Title,
   Tooltip,
-  Legend,
-  Scale,
-  CoreScaleOptions,
-  Tick,
-  LineController,
-  BarController,
 } from "chart.js";
+import { use, useEffect, useRef } from "react";
 
 Chart.register(
   CategoryScale,
@@ -186,6 +185,12 @@ export default function CommercialStatusChart({ commercialStatusPromise }: Props
       },
     });
 
+    const chartContainer = document.getElementById("chart-container");
+
+    if (chartContainer) {
+      chartContainer.scrollTo({ left: chartContainer.scrollWidth, behavior: "smooth" });
+    }
+
     return () => {
       if (chartInstance.current) {
         chartInstance.current.destroy();
@@ -198,7 +203,7 @@ export default function CommercialStatusChart({ commercialStatusPromise }: Props
   }
 
   return (
-    <div className="w-full px-1 overflow-x-auto rounded-lg border border-gray-200">
+    <div className="w-full px-1 overflow-x-auto rounded-lg border border-gray-200" id="chart-container">
       <div className="relative w-full h-[500px] min-w-[1000px] overflow-x-auto">
         <canvas ref={chartRef} />
       </div>

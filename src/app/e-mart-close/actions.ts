@@ -15,6 +15,7 @@ export async function getEMartClose(): Promise<Date[]> {
     if (dateText) {
       const [month, day] = dateText.split("/").map((num) => parseInt(num, 10));
       const date = new Date();
+      date.setFullYear(new Date().getFullYear()); // 현재 연도 설정
       date.setMonth(month - 1); // JavaScript의 월은 0부터 시작
       date.setDate(day);
       dates.push(date);

@@ -104,9 +104,15 @@ export default function Testing({ quizzes, onFinish }: Props) {
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
+    const userAnswer = inputRef.current?.value || "";
+    if (userAnswer.length === 0) {
+      alert("레시피를 입력해주세요.");
+      restartTimer();
+      return;
+    }
     setLoading(true);
+
     try {
-      const userAnswer = inputRef.current?.value || "";
       const result = await generateRecipe(quizzes[progress - 1].recipe, userAnswer);
       const finalResult = result.isCorrect ? "정답" : result.feedback || "채점 결과를 불러오지 못했습니다.";
       setResult(finalResult);
@@ -147,7 +153,10 @@ export default function Testing({ quizzes, onFinish }: Props) {
     }
   }
 
-  const correctCount = useMemo(() => quizResults.filter((result) => result.result.length === 0).length, [quizResults]);
+  const correctCount = useMemo(
+    () => quizResults.filter((result) => result.result.includes("정답")).length,
+    [quizResults],
+  );
 
   const progressColor = useMemo(() => {
     const ratio = correctCount / quizzes.length;
@@ -248,7 +257,12 @@ export default function Testing({ quizzes, onFinish }: Props) {
             <Button size="small" onClick={handleGradeRecipe} type="submit" disabled={showRecipe || loading}>
               {loading ? <CircularProgress size={20} color="inherit" /> : "채점"}
             </Button>
-            <Button size="small" onClick={handleNextQuiz} ref={nextButtonRef} disabled={isFinished || loading}>
+            <Button
+              size="small"
+              onClick={handleNextQuiz}
+              ref={nextButtonRef}
+              disabled={isFinished || loading || result === ""}
+            >
               다음 메뉴
             </Button>
           </CardActions>

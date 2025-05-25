@@ -3,6 +3,7 @@ import { getEMartClose } from "./actions";
 import Calendar from "./Calendar";
 import { Button, Typography } from "@mui/material";
 import Image from "next/image";
+import { getDaysUntilNextClose } from "./getDaysUntilNextClose";
 
 export default async function EMartClosePage() {
   const eMartClose = await getEMartClose();
@@ -14,12 +15,6 @@ export default async function EMartClosePage() {
       date.getMonth() === today.getMonth() &&
       date.getFullYear() === today.getFullYear(),
   );
-
-  const nextCloseDate = eMartClose.filter((date) => date > today).sort((a, b) => a.getTime() - b.getTime())[0];
-
-  const daysUntilNextClose = nextCloseDate
-    ? Math.ceil((nextCloseDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
-    : null;
 
   return (
     <div className="flex flex-col items-center justify-items-center min-h-dvh p-8 pb-20 gap-2 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -33,7 +28,7 @@ export default async function EMartClosePage() {
         <Typography variant="h5">휴무일</Typography>
       </div>
       <Typography variant="h6" color={isTodayClose ? "error" : "primary"}>
-        {isTodayClose ? "오늘은 휴무일입니다." : `다음 휴무일까지 ${daysUntilNextClose}일 남았습니다.`}
+        {isTodayClose ? "오늘은 휴무일입니다." : `다음 휴무일까지 ${getDaysUntilNextClose(eMartClose)}일 남았습니다.`}
       </Typography>
       <Calendar eMartClose={eMartClose} />
     </div>

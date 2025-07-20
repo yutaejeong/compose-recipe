@@ -1,6 +1,6 @@
 "use client";
 
-import { Schedule } from "@/app/cgv-schedules/actions";
+import { Schedule } from "@/app/cgv-schedules/types";
 import { Card, CardContent, CardMedia, Chip, Divider, Typography } from "@mui/material";
 import { Fragment, use } from "react";
 
@@ -51,9 +51,9 @@ export default function ScheduleList({ schedulesPromise }: Props) {
           </Typography>
           <Typography variant="subtitle1">
             <strong>
-              {schedule.startTime.substring(0, 2)}:{schedule.startTime.substring(2)}
+              {schedule.startTime}
             </strong>{" "}
-            ~ {schedule.endTime.substring(0, 2)}:{schedule.endTime.substring(2)}
+            ~ {schedule.endTime}
           </Typography>
           <Typography variant="subtitle1">
             <strong>{schedule.bookedSeats}석</strong> 예매됨

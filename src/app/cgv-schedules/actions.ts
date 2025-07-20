@@ -1,103 +1,48 @@
 "use server";
 
-import * as cheerio from "cheerio";
-import { randomUUID } from "crypto";
-import { revalidateTag } from "next/cache";
+import Base64 from "crypto-js/enc-base64";
+import HmacSHA256 from "crypto-js/hmac-sha256";
+import { ApiResponse, Schedule } from "./types";
 
-// 영화 스케줄 타입 정의
-export interface Schedule {
-  title: string;
-  poster_url: string;
-  hallType: string;
-  startTime: string;
-  endTime: string;
-  totalSeats: number;
-  remainingSeats: number;
-  bookedSeats: number;
-}
+function generateSignature(path: string, body = "") {
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const secretKey = "ydqXY0ocnFLmJGHr_zNzFcpjwAsXq_8JcBNURAkRscg";
+  const source = `${timestamp}|${path}|${body}`;
+  const signature = HmacSHA256(source, secretKey).toString(Base64);
 
-function getKSTDateString() {
-  const now = new Date();
-
-  // UTC+9 (KST) 시간대 오프셋
-  const utcOffset = 9 * 60 * 60 * 1000;
-
-  // UTC 기준 시간 + 9시간
-  const kstTime = new Date(now.getTime() + utcOffset);
-
-  // yyyyMMdd 형식으로 변환
-  const yyyy = kstTime.getUTCFullYear();
-  const MM = String(kstTime.getUTCMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
-  const dd = String(kstTime.getUTCDate()).padStart(2, "0");
-
-  return `${yyyy}${MM}${dd}`;
+  return {
+    "X-TIMESTAMP": timestamp,
+    "X-SIGNATURE": signature,
+  };
 }
 
 export async function getCgvSchedules() {
-  const headers = new Headers();
-  headers.append(
-    "Accept",
-    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-  );
-  headers.append("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7");
-  headers.append("Cache-Control", "no-cache");
-  headers.append("Connection", "keep-alive");
-  headers.append("Pragma", "no-cache");
-  headers.append("Referer", `http://www.cgv.co.kr/theaters/?areacode=01&theaterCode=0074&date=${getKSTDateString()}`);
-  headers.append("Upgrade-Insecure-Requests", "1");
-  headers.append("Cookie", `ASP.NET_SessionId=${randomUUID()}`); // 임의의 세션ID 생성
-
+  const path = "/cnm/atkt/searchMovScnInfo";
   const response = await fetch(
-    `http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx?areacode=01&theatercode=0074&date=${getKSTDateString()}`,
+    `https://api-mobile.cgv.co.kr${path}?coCd=A420&siteNo=0074&scnYmd=20250720&rtctlScopCd=08`,
     {
       method: "GET",
-      headers,
-      redirect: "follow",
+      cache: "no-cache",
+      headers: {
+        "Accept-Language": "ko-KR",
+        ...generateSignature(path),
+      },
     },
   );
-  const html = await response.text();
-  const $ = cheerio.load(html);
+
+  const data = await response.json() as ApiResponse;
 
   // 영화별 스케줄 추출
-  const schedules: Schedule[] = [];
-
-  // 영화별 스케줄 추출
-  $(".sect-showtimes > ul > li").each((i, movieElement) => {
-    const title = $(movieElement).find(".info-movie a strong").text().trim(); // 영화 제목
-    const poster_id = $(movieElement).find(".info-movie a").attr("href")?.split("midx=")[1] ?? "";
-    const poster_url = `https://img.cgv.co.kr/Movie/Thumbnail/Poster/0000${poster_id.substring(0, 2)}/${poster_id}/${poster_id}_320.jpg`;
-
-    // 각 상영 정보 추출
-    $(movieElement)
-      .find(".type-hall")
-      .each((j, hallElement) => {
-        const hallType = $(hallElement).find(".info-hall ul li").next().prevAll().text().trim().replace(/\s+/g, " "); // 상영 유형
-        const totalSeatsText = $(hallElement).find(".info-hall ul li:nth-child(3)").text();
-        const totalSeats = parseInt(totalSeatsText.replace("총", "").replace("석", "").trim());
-
-        // 시간표 추출
-        $(hallElement)
-          .find(".info-timetable ul li")
-          .each((k, scheduleElement) => {
-            const startTime = $(scheduleElement).find("a").attr("data-playstarttime") || "";
-            const endTime = $(scheduleElement).find("a").attr("data-playendtime") || "";
-            const remainingSeatsText = $(scheduleElement).find("a").attr("data-seatremaincnt");
-            const remainingSeats = remainingSeatsText ? parseInt(remainingSeatsText) : 0;
-            const bookedSeats = totalSeats - remainingSeats; // 예매된 좌석 수 계산
-
-            schedules.push({
-              title,
-              poster_url,
-              hallType,
-              startTime,
-              endTime,
-              totalSeats,
-              remainingSeats,
-              bookedSeats,
-            });
-          });
-      });
-  });
+  const schedules: Schedule[] = data.data.map((s) => ({
+    title: s.movNm,
+    poster_url: `https://img.cgv.co.kr/Movie/Thumbnail/Poster/${s.physcFilePathnm}`,
+    hallType: s.expoScnsNm,
+    startTime: `${s.scnsrtTm.slice(0, 2)}:${s.scnsrtTm.slice(2)}`,
+    endTime: `${s.scnendTm.slice(0, 2)}:${s.scnendTm.slice(2)}`,
+    totalSeats: Number(s.stcnt),
+    remainingSeats: Number(s.frSeatCnt),
+    bookedSeats: Number(s.stcnt) - Number(s.frSeatCnt),
+  }));
 
   return schedules
     .filter((schedule) => !!schedule.startTime)
